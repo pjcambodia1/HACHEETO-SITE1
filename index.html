@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Hacheeto – Big Adventure</title>
   <meta name="description" content="Hacheeto: a cheerful children's storybook with big buttons, pictures, and videos." />
-  <!-- 🐾 favicon -->
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <link rel="icon" href="favicon.png" type="image/png">
+  <!-- 🐾 favicon (cache-busted) -->
+  <link rel="icon" href="favicon.ico?v=3" type="image/x-icon">
+  <link rel="icon" href="favicon.png?v=3" type="image/png">
+  <link rel="shortcut icon" href="favicon.ico?v=3" type="image/x-icon">
   <style>
     html{scroll-behavior:smooth}
     :root{
@@ -19,11 +20,12 @@
     *{box-sizing:border-box}
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:var(--bg);color:var(--ink)}
     .container{max-width:1100px;margin:0 auto}
+
     /* Top bar */
     .bar{position:sticky;top:0;background:rgba(255,255,255,.95);border-bottom:1px solid #eadfcf;z-index:40}
     .bar-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px}
     .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:56px;height:56px;border-radius:50%;background:#fff url('favicon.png') center/cover no-repeat;box-shadow:0 6px 20px rgba(0,0,0,.12)}
+    .logo{width:56px;height:56px;border-radius:50%;background:#fff url('favicon.png?v=3') center/cover no-repeat;box-shadow:0 6px 20px rgba(0,0,0,.12)}
     .btn{border:0;background:var(--brand);color:#fff;border-radius:12px;padding:10px 14px;font-weight:700;text-decoration:none}
     .btn.small{padding:6px 10px}.btn.alt{background:var(--brand-2);color:#3b2f2f}
     .pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
@@ -46,6 +48,19 @@
     .thumb{aspect-ratio:4/3;border-radius:14px;background:#f7f3ec center/cover no-repeat;border:1px dashed #e5dccb;display:block}
     .media{aspect-ratio:16/9;border-radius:16px;background:#f7f3ec;display:grid;place-items:center}
     footer{max-width:1100px;margin:24px auto 12px;color:var(--ink-soft);font-size:14px;padding:0 16px}
+
+    /* Hero image fallback via CSS (shows even if JS fails) */
+    .hero-img{aspect-ratio:16/10;border-radius:20px;border:1px dashed #e5dccb;
+      background:#f7f3ec url('hachito.webp') center/cover no-repeat;
+    }
+
+    /* Diagnostics (toggle) */
+    .diag{display:none;background:#fffbe6;border:1px solid #f3d9a4;border-radius:12px;padding:12px 14px;margin:12px 0;font-size:14px}
+    .diag table{width:100%;border-collapse:collapse}
+    .diag td,.diag th{padding:6px;border-bottom:1px solid #f0e6d7;text-align:left;font-family:ui-monospace,monospace}
+    .diag .ok{color:#166534;font-weight:700}
+    .diag .bad{color:#991b1b;font-weight:700}
+    .diag .toggle{cursor:pointer;text-decoration:underline}
   </style>
 </head>
 <body>
@@ -78,6 +93,14 @@
         <a class="pill alt" href="#subscribe-box">Subscribe</a>
         <a class="pill" href="#about">About</a>
         <a class="pill" href="#contact">Contact</a>
+      </div>
+      <div class="hero-img" id="heroImg" aria-label="Hacheeto hero"></div>
+
+      <!-- Diagnostics toggle -->
+      <p style="margin-top:10px"><span class="toggle" id="diagToggle">Diagnostics ▸</span></p>
+      <div class="diag" id="diagBox">
+        <strong>File reachability (200 = good):</strong>
+        <table id="diagTable"><thead><tr><th>File</th><th>Status</th></tr></thead><tbody></tbody></table>
       </div>
     </div>
   </section>
@@ -148,10 +171,10 @@
   </footer>
 
   <script>
-    // Encode filenames with spaces/special chars so Vercel serves them
-    const fileURL = (name) => encodeURI(name);
+  (function(){
+    const safe = (name) => encodeURI(name);
 
-    // STORY PAGES — use your real files (7 pages + hero)
+    // Story pages (per your files)
     const PAGES = [
       { title: 'Page 1 · Wake Up, Hacheeto!', text: 'Morning light tickled Hacheeto\\'s whiskers. “Adventure time!” he yawned, buttoning his bright red hoodie.', img: 'hachito.webp' },
       { title: 'Page 2 · The Button Path', text: 'Big friendly buttons lined the path. Hacheeto tapped the first one—boop!—and a bluebird sang.', img: 'img1.png' },
@@ -162,12 +185,10 @@
       { title: 'Page 7 · Adventure Continues', text: 'From high above, Hacheeto saw paths yet to explore. His silly jacket carried him into tomorrow.', img: 'img6.png' }
     ];
 
-    // OPTIONAL: extra gallery-only image if present (will show thumbnail only)
-    const EXTRA_GALLERY_IMAGES = ['Img8.png']; // note the capital I
+    // You have an extra image named with capital I:
+    const EXTRA_GALLERY = ['Img8.png'];
 
-    const PDF_URL = 'Hacheeto_Big_Adventure_PrintReady.pdf';
-
-    // VIDEOS — all from your list, with dancing queued by default
+    // Videos you listed (queue dancing by default)
     const VIDEOS = [
       { label: 'Gets Wings (jacket)', file: 'hacheeto gets wings his silly jacket.mp4' },
       { label: 'Excited',              file: 'hacheto excited.mp4' },
@@ -183,7 +204,6 @@
     const DEFAULT_VIDEO = 'hachito dances.mp4';
 
     // Elements
-    let i = 0;
     const illus = document.getElementById('illus');
     const pageTitle = document.getElementById('pageTitle');
     const pageText = document.getElementById('pageText');
@@ -195,68 +215,67 @@
     const pdfLink = document.getElementById('pdfLink');
     const downloadBtn = document.getElementById('downloadBtn');
 
-    // Set hero & PDF
+    // Boot
     year.textContent = new Date().getFullYear();
-    pdfLink.href = fileURL(PDF_URL); downloadBtn.href = fileURL(PDF_URL);
+    pdfLink.href = safe('Hacheeto_Big_Adventure_PrintReady.pdf');
+    downloadBtn.href = safe('Hacheeto_Big_Adventure_PrintReady.pdf');
 
-    // Build dots & gallery thumbnails
+    let i = 0;
+    function go(idx){ i = Math.max(0, Math.min(PAGES.length-1, idx)); render(); }
+
     function buildNav(){
       dots.innerHTML = '';
       thumbs.innerHTML = '';
-
       PAGES.forEach((p,idx)=>{
+        // dots
         const d = document.createElement('div');
         d.className = 'dot';
         if(idx===i) d.classList.add('active');
         d.addEventListener('click',()=>go(idx));
         dots.appendChild(d);
-
+        // thumbs
         const t = document.createElement('a');
         t.className = 'thumb';
         t.href = '#story';
         t.title = p.title;
-        t.style.backgroundImage = `url(${fileURL(p.img)})`;
+        t.style.backgroundImage = `url(${safe(p.img)})`;
         t.addEventListener('click',()=>go(idx));
         thumbs.appendChild(t);
       });
-
-      // Add extra gallery-only images if present
-      EXTRA_GALLERY_IMAGES.forEach(fname=>{
+      EXTRA_GALLERY.forEach(fname=>{
         const t = document.createElement('a');
         t.className = 'thumb';
         t.href = '#gallery';
         t.title = fname;
-        t.style.backgroundImage = `url(${fileURL(fname)})`;
+        t.style.backgroundImage = `url(${safe(fname)})`;
         thumbs.appendChild(t);
       });
     }
 
     function render(){
       const p = PAGES[i];
-      illus.style.backgroundImage = `url(${fileURL(p.img)})`;
+      illus.style.backgroundImage = `url(${safe(p.img)})`;
       pageTitle.textContent = p.title;
       pageText.textContent = p.text;
       [...dots.children].forEach((d,idx)=> d.classList.toggle('active', idx===i));
       prevBtn.classList.toggle('disabled', i===0);
       nextBtn.classList.toggle('disabled', i===PAGES.length-1);
     }
-    function go(idx){ i = Math.max(0, Math.min(PAGES.length-1, idx)); render(); }
-
     prevBtn.addEventListener('click',()=>go(i-1));
     nextBtn.addEventListener('click',()=>go(i+1));
 
-    // Videos
     function playMp4(file){
       const slot = document.getElementById('videoSlot');
       slot.innerHTML = '';
-      const video = document.createElement('video');
-      video.controls = true;
-      video.style.width = '100%';
-      video.style.borderRadius = '16px';
-      video.src = fileURL(file);
-      video.onerror = ()=>{ slot.textContent = '⚠️ Video missing: '+file; };
-      slot.appendChild(video);
+      const v = document.createElement('video');
+      v.controls = true;
+      v.style.width = '100%';
+      v.style.borderRadius = '16px';
+      v.src = safe(file);
+      v.onerror = ()=>{ slot.textContent = '⚠️ Video missing: '+file; };
+      slot.appendChild(v);
     }
+
     function buildVideoButtons(){
       const wrap = document.getElementById('videoButtons');
       wrap.innerHTML = '';
@@ -269,8 +288,57 @@
       });
     }
 
-    // Init
-    buildNav(); render(); buildVideoButtons(); playMp4(DEFAULT_VIDEO);
+    // Diagnostics
+    function head(url){
+      return fetch(url, {method:'HEAD'}).then(r=>({ok:r.ok,status:r.status})).catch(()=>({ok:false,status:'ERR'}));
+    }
+    const diagList = [
+      'favicon.png?v=3','favicon.ico?v=3',
+      'hachito.webp','img1.png','img2.png','img3.png','img4.png','img5.png','img6.png','Img8.png',
+      'Hacheeto_Big_Adventure_PrintReady.pdf',
+      'hacheeto gets wings his silly jacket.mp4',
+      'hacheto excited.mp4',
+      'hacheto gallops.mp4',
+      'hachito dances.mp4',
+      'hachito dreams and flies.mp4',
+      'hachito flying_851257644_source.mp4',
+      'hachito is here.mp4',
+      'hachito mobilize.mp4',
+      'hachito wakes up ready.mp4',
+      'hajito cartoon running thruthe hallway .mp4'
+    ];
+    const diagToggle = document.getElementById('diagToggle');
+    const diagBox = document.getElementById('diagBox');
+    const diagTable = document.getElementById('diagTable').querySelector('tbody');
+    diagToggle.addEventListener('click', async ()=>{
+      diagBox.style.display = diagBox.style.display === 'block' ? 'none' : 'block';
+      if (diagTable.childElementCount) return;
+      for (const name of diagList){
+        const row = document.createElement('tr');
+        const a = document.createElement('a');
+        a.href = safe(name); a.textContent = name; a.target = '_blank'; a.rel = 'noopener';
+        const tdName = document.createElement('td'); tdName.appendChild(a);
+        const tdStatus = document.createElement('td'); tdStatus.textContent = '…';
+        row.appendChild(tdName); row.appendChild(tdStatus);
+        diagTable.appendChild(row);
+        try{
+          const res = await head(safe(name));
+          tdStatus.textContent = res.ok ? `200 OK` : `${res.status}`;
+          tdStatus.className = res.ok ? 'ok' : 'bad';
+        }catch(e){
+          tdStatus.textContent = 'ERR';
+          tdStatus.className = 'bad';
+        }
+      }
+    });
+
+    // Init (in order)
+    buildNav();
+    render();
+    buildVideoButtons();
+    playMp4('hachito dances.mp4'); // show something immediately
+  })();
   </script>
 </body>
 </html>
+
