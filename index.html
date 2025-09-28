@@ -18,7 +18,7 @@
     .title p{margin:4px 0 0;color:var(--ink-soft)}
     .bar{position:sticky;top:0;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,.85));backdrop-filter:saturate(1.2) blur(6px);border-bottom:1px solid #eee;z-index:40}
     nav{display:flex;gap:8px;flex-wrap:wrap;padding:10px 0}
-    button, .btn{appearance:none;border:0;background:var(--ink);color:white;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer;box-shadow:0 6px 14px rgba(0,0,0,.12)}
+    .btn{appearance:none;border:0;background:var(--ink);color:white;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer;box-shadow:0 6px 14px rgba(0,0,0,.12);text-decoration:none;display:inline-block}
     .btn.alt{background:var(--brand)}
     .btn.ghost{background:#fff;color:var(--ink);border:1px solid #e5e7eb}
     .btn.small{padding:6px 10px;border-radius:10px}
@@ -28,7 +28,7 @@
     .story{min-height:360px;display:grid;grid-template-rows:auto 1fr auto;gap:12px}
     .page{display:grid;grid-template-columns:1fr 1.1fr;gap:18px;align-items:center}
     @media (max-width:800px){.page{grid-template-columns:1fr}}
-    .illus{aspect-ratio:4/3;border-radius:16px;background:#f7f7f7 url('assets/page-1.jpg') center/cover no-repeat;border:1px dashed #e5e7eb}
+    .illus{aspect-ratio:4/3;border-radius:16px;background:#f7f7f7 center/cover no-repeat;border:1px dashed #e5e7eb}
     .copy h2{margin:0 0 8px}
     .copy p{margin:0;color:var(--ink-soft);line-height:1.6}
     .story .controls{display:flex;justify-content:space-between;align-items:center}
@@ -36,7 +36,7 @@
     .dot{width:10px;height:10px;border-radius:999px;background:#e5e7eb}
     .dot.active{background:var(--brand)}
     .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
-    .thumb{aspect-ratio:4/3;border-radius:14px;background:#f7f7f7 url('assets/page-2.jpg') center/cover no-repeat;border:1px dashed #e5e7eb}
+    .thumb{aspect-ratio:4/3;border-radius:14px;background:#f7f7f7 center/cover no-repeat;border:1px dashed #e5e7eb}
     .media{aspect-ratio:16/9;border-radius:16px;background:#f7f7f7;display:grid;place-items:center;color:var(--ink-soft);border:1px dashed #e5e7eb}
     footer{margin:24px 0 12px;color:var(--ink-soft);font-size:14px}
     .note{background:#fffbe6;border:1px solid #fde68a;padding:12px 14px;border-radius:12px}
@@ -65,7 +65,7 @@
       <div class="logo">H</div>
       <div class="title">
         <h1>Hacheeto’s Big Adventure</h1>
-        <p>Simple, fast, and consistent. Buttons for navigation. Pictures load locally. Videos can be added later.</p>
+        <p>Simple, fast, and consistent. Buttons for navigation. Pictures load from the repo root. Videos play from the root too.</p>
       </div>
     </header>
 
@@ -78,30 +78,30 @@
         </div>
       </div>
       <div class="controls">
-        <button class="btn" id="prevBtn" aria-label="Previous page">◀ Prev</button>
+        <a class="btn" id="prevBtn" aria-label="Previous page">◀ Prev</a>
         <div class="dotset" id="dots"></div>
-        <button class="btn" id="nextBtn" aria-label="Next page">Next ▶</button>
+        <a class="btn" id="nextBtn" aria-label="Next page">Next ▶</a>
       </div>
     </section>
 
     <section id="gallery" class="card" aria-label="Gallery">
       <h3 style="margin-top:0">Picture Gallery</h3>
-      <div class="note">Drop your images into <span class="kbd">/assets/</span> and name them <span class="kbd">page-1.jpg</span>, <span class="kbd">page-2.jpg</span>, etc. Thumbnails and the reader will pick them up automatically.</div>
+      <div class="note">Place your images in the repo root (same folder as index.html) and list their filenames in <span class="kbd">PAGES</span> below. Supports <strong>.png</strong>, <strong>.jpg</strong>, and <strong>.webp</strong>.</div>
       <div class="gallery" id="thumbs"></div>
     </section>
 
     <section id="media" class="card" aria-label="Videos">
-      <h3 style="margin-top:0">Videos (add later—ready now)</h3>
-      <div class="media" id="videoSlot">Add a <span class="kbd">.mp4</span> to <span class="kbd">/media/</span> and set its file name below. Or paste a YouTube link.</div>
+      <h3 style="margin-top:0">Videos</h3>
+      <div class="media" id="videoSlot">Put your <span class="kbd">.mp4</span> in the repo root (next to index.html) and set its name below.</div>
       <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-        <button class="btn small" id="useMP4">Use local MP4</button>
-        <button class="btn small" id="useYouTube">Use YouTube URL</button>
+        <button class="btn small" id="useMP4">Play local MP4</button>
+        <button class="btn small" id="useYouTube">Play YouTube</button>
       </div>
     </section>
 
     <section class="card" aria-label="Get the book">
       <h3 style="margin-top:0">Get the printable PDF</h3>
-      <p>When you have your final print-ready file, set the link below. (For now it points to a placeholder.)</p>
+      <p>Place your final print-ready PDF in the repo root and set the filename below.</p>
       <p><a class="link" id="pdfLink" href="#" target="_blank" rel="noopener">Open Hacheeto_Big_Adventure_PrintReady.pdf</a></p>
     </section>
 
@@ -110,23 +110,20 @@
     </footer>
   </main>
 
-  <!-- Configuration for quick editing without build tools -->
   <script>
-    // Pages manifest — edit text and add more pages here.
+    // 🔧 CHANGE ONLY THESE VALUES TO MATCH YOUR FILES IN THE REPO ROOT
     const PAGES = [
-      { title: 'Page 1 · Wake Up, Hacheeto!', text: 'Morning light tickled Hacheeto\'s whiskers. “Adventure time!” he yawned, buttoning his bright red hoodie.', img: 'assets/page-1.jpg' },
-      { title: 'Page 2 · The Button Path', text: 'Big friendly buttons lined the path. Hacheeto tapped the first one—*boop!*—and a bluebird sang.', img: 'assets/page-2.jpg' },
-      { title: 'Page 3 · Crossing the Creek', text: 'A tiny bridge wobbled. “Steady, paws,” said Hacheeto, eyes bright with courage.', img: 'assets/page-3.jpg' },
-      { title: 'Page 4 · The Helpful Fox', text: '“Need a map?” asked a fox, offering a scroll with a smile. Hacheeto bowed, “Thank you!”', img: 'assets/page-4.jpg' },
-      { title: 'Page 5 · Home for Cocoa', text: 'Stars winked hello. Hacheeto padded home, cocoa in paw, dreams full of tomorrow’s wonders.', img: 'assets/page-5.jpg' }
+      { title: 'Page 1 · Wake Up, Hacheeto!', text: 'Morning light tickled Hacheeto\\'s whiskers. “Adventure time!” he yawned, buttoning his bright red hoodie.', img: 'page-1.png' },
+      { title: 'Page 2 · The Button Path', text: 'Big friendly buttons lined the path. Hacheeto tapped the first one—boop!—and a bluebird sang.', img: 'page-2.webp' },
+      { title: 'Page 3 · Crossing the Creek', text: 'A tiny bridge wobbled. “Steady, paws,” said Hacheeto, eyes bright with courage.', img: 'page-3.jpg' },
+      { title: 'Page 4 · The Helpful Fox', text: '“Need a map?” asked a fox, offering a scroll with a smile. Hacheeto bowed, “Thank you!”', img: 'page-4.png' },
+      { title: 'Page 5 · Home for Cocoa', text: 'Stars winked hello. Hacheeto padded home, cocoa in paw, dreams full of tomorrow’s wonders.', img: 'page-5.png' }
     ];
+    const PDF_URL = 'Hacheeto_Big_Adventure_PrintReady.pdf'; // set to your real file in root
+    const LOCAL_MP4 = 'teaser.mp4'; // set to your real .mp4 filename in root
+    const YT_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'; // replace or ignore
 
-    // PDF + Video placeholders — set these to real files when you have them.
-    const PDF_URL = 'Hacheeto_Big_Adventure_PrintReady.pdf'; // put the real path or full URL
-    const LOCAL_MP4 = 'media/teaser.mp4';
-    const YT_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'; // replace with your video
-
-    // Basic state + wiring
+    // State & elements
     let i = 0;
     const illus = document.getElementById('illus');
     const pageTitle = document.getElementById('pageTitle');
@@ -136,41 +133,56 @@
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const year = document.getElementById('year');
-
-    // Initialize PDF link
     const pdfLink = document.getElementById('pdfLink');
     const downloadBtn = document.getElementById('downloadBtn');
+
+    // Init PDF & nav
     pdfLink.href = PDF_URL; downloadBtn.href = PDF_URL;
 
-    // Build dots + thumbs
+    // Build dots & gallery thumbnails dynamically from PAGES
     function buildNav(){
       dots.innerHTML = '';
       thumbs.innerHTML = '';
       PAGES.forEach((p,idx)=>{
-        const d = document.createElement('div'); d.className = 'dot'; if(idx===i) d.classList.add('active'); d.addEventListener('click',()=>go(idx)); dots.appendChild(d);
-        const t = document.createElement('a'); t.className='thumb'; t.href='#story'; t.title=p.title; t.style.backgroundImage=`url(${p.img})`; t.addEventListener('click',()=>go(idx)); thumbs.appendChild(t);
+        const d = document.createElement('div');
+        d.className = 'dot';
+        if(idx===i) d.classList.add('active');
+        d.addEventListener('click',()=>go(idx));
+        dots.appendChild(d);
+
+        const t = document.createElement('a');
+        t.className = 'thumb';
+        t.href = '#story';
+        t.title = p.title;
+        t.style.backgroundImage = `url(${p.img})`;
+        t.addEventListener('click',()=>go(idx));
+        thumbs.appendChild(t);
       });
     }
 
     function render(){
       const p = PAGES[i];
       illus.style.backgroundImage = `url(${p.img})`;
-      pageTitle.textContent = p.title; pageText.textContent = p.text;
+      pageTitle.textContent = p.title;
+      pageText.textContent = p.text;
       [...dots.children].forEach((d,idx)=> d.classList.toggle('active', idx===i));
-      prevBtn.disabled = i===0; nextBtn.disabled = i===PAGES.length-1;
+      prevBtn.classList.toggle('disabled', i===0);
+      nextBtn.classList.toggle('disabled', i===PAGES.length-1);
     }
-
     function go(idx){ i = Math.max(0, Math.min(PAGES.length-1, idx)); render(); }
 
     prevBtn.addEventListener('click',()=>go(i-1));
     nextBtn.addEventListener('click',()=>go(i+1));
 
+    // Video controls
     document.getElementById('useMP4').addEventListener('click',()=>{
-      document.getElementById('videoSlot').innerHTML = `<video controls width="100%" src="${LOCAL_MP4}" style="border-radius:16px"></video>`;
+      document.getElementById('videoSlot').innerHTML =
+        `<video controls width="100%" src="${LOCAL_MP4}" style="border-radius:16px"></video>`;
     });
     document.getElementById('useYouTube').addEventListener('click',()=>{
       const id = (YT_URL.split('v=')[1]||'').split('&')[0]||'';
-      document.getElementById('videoSlot').innerHTML = `<iframe width="100%" height="315" src="https://www.youtube.com/embed/${id}" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+      document.getElementById('videoSlot').innerHTML =
+        `<iframe width="100%" height="315" src="https://www.youtube.com/embed/${id}" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
     });
 
     year.textContent = new Date().getFullYear();
