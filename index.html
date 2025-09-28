@@ -4,60 +4,86 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Hacheeto – Big Adventure</title>
-  <meta name="description" content="Hacheeto: a cheerful children's storybook with big friendly buttons, pictures, and videos." />
+  <meta name="description" content="Hacheeto: a cheerful children's storybook with big buttons, pictures, and videos." />
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <style>
     html{scroll-behavior:smooth}
-    :root{ --bg:#fffaf5; --ink:#1f2937; --ink-soft:#4b5563; --brand:#ef4444; --brand-2:#f59e0b; --panel:#ffffff; --ring:#fde68a }
+    :root{
+      --bg:#FFF8E6;         /* warm beige background */
+      --ink:#3b2f2f;        /* dark brown text */
+      --ink-soft:#6b5b53;   /* soft brown */
+      --brand:#8B5E34;      /* chocolate brown */
+      --brand-2:#D4A373;    /* golden tan */
+      --panel:#ffffff;
+      --ring:#f3d9a4;
+      --pill:#CDAA7D;       /* pill button tan */
+      --pill-2:#B08968;     /* pill alt brown */
+    }
     *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:var(--bg);color:var(--ink)}
-    a{color:inherit}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+    }
     .container{max-width:1100px;margin:0 auto}
     /* Top bar */
-    .bar{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid #eee;z-index:40}
+    .bar{position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid #eadfcf;z-index:40}
     .bar-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px}
     .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:56px;height:56px;border-radius:50%;background:#fff url('favicon.png') center/cover no-repeat;box-shadow:0 6px 20px rgba(0,0,0,.15)}
+    .logo{
+      width:56px;height:56px;border-radius:50%;
+      background:#fff url('favicon.png') center/cover no-repeat;
+      box-shadow:0 6px 20px rgba(0,0,0,.12)
+    }
     .nav{display:flex;gap:8px;flex-wrap:wrap}
-    .btn{appearance:none;border:0;background:var(--ink);color:#fff;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer;box-shadow:0 6px 14px rgba(0,0,0,.12);text-decoration:none;display:inline-block}
+    .btn{
+      appearance:none;border:0;background:var(--brand);color:#fff;border-radius:12px;
+      padding:10px 14px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block
+    }
     .btn.small{padding:6px 10px;border-radius:10px}
-    .btn.alt{background:var(--brand)}
-    .btn.ghost{background:#fff;color:var(--ink);border:1px solid #e5e7eb}
+    .btn.alt{background:var(--brand-2);color:#3b2f2f}
     .btn.disabled{opacity:.45;pointer-events:none}
+
     /* Hero */
     .hero{padding:20px 16px 10px}
     .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:center}
     @media (max-width:900px){.hero-grid{grid-template-columns:1fr}}
-    .hero-card{background:var(--panel);border:1px solid #f0f0f0;border-radius:24px;padding:18px;box-shadow:0 6px 24px rgba(0,0,0,.06)}
+    .hero-card{background:var(--panel);border:1px solid #f0e6d7;border-radius:24px;padding:18px;box-shadow:0 6px 24px rgba(0,0,0,.06)}
     .hero h1{margin:8px 0 6px;font-size:clamp(26px,4.4vw,44px)}
     .hero p{margin:0;color:var(--ink-soft)}
-    .hero-img{aspect-ratio:16/10;border-radius:20px;background:#f7f7f7 center/cover no-repeat;border:1px dashed #e5e7eb}
+    .hero-img{aspect-ratio:16/10;border-radius:20px;background:#f7f3ec center/cover no-repeat;border:1px dashed #e5dccb}
     .pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-    .pill{appearance:none;border:0;background:var(--ink);color:#fff;padding:12px 16px;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 18px rgba(0,0,0,.12)}
-    .pill.alt{background:var(--brand)}
+    .pill{
+      appearance:none;border:0;background:var(--pill);color:#3b2f2f;padding:12px 16px;border-radius:999px;
+      font-weight:800;text-decoration:none;box-shadow:0 8px 18px rgba(139,94,52,.18)
+    }
+    .pill.alt{background:var(--pill-2);color:#fff}
+
     /* Main grid */
     .wrap{padding:0 16px 28px}
     .main-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
     @media (max-width:900px){.main-grid{grid-template-columns:1fr}}
-    .card{background:var(--panel);border:1px solid #f0f0f0;border-radius:20px;padding:18px;box-shadow:0 8px 30px rgba(0,0,0,.06)}
+    .card{background:var(--panel);border:1px solid #f0e6d7;border-radius:20px;padding:18px;box-shadow:0 8px 30px rgba(0,0,0,.06)}
+
     /* Story */
     .story{display:grid;grid-template-rows:auto 1fr auto;gap:12px;min-height:420px}
     .page{display:grid;grid-template-columns:1fr 1.1fr;gap:18px;align-items:center}
     @media (max-width:800px){.page{grid-template-columns:1fr}}
-    .illus{aspect-ratio:4/3;border-radius:16px;background:#f7f7f7 center/cover no-repeat;border:1px dashed #e5e7eb}
+    .illus{aspect-ratio:4/3;border-radius:16px;background:#f7f3ec center/cover no-repeat;border:1px dashed #e5dccb}
     .copy h2{margin:0 0 8px}
     .copy p{margin:0;color:var(--ink-soft);line-height:1.6}
     .controls{display:flex;justify-content:space-between;align-items:center}
     .dotset{display:flex;gap:6px}
-    .dot{width:10px;height:10px;border-radius:999px;background:#e5e7eb}
-    .dot.active{background:var(--brand)}
+    .dot{width:10px;height:10px;border-radius:999px;background:#e7dccb}
+    .dot.active{background:var(--brand-2)}
+
     /* Gallery + videos */
     h3{margin:0 0 10px}
-    .note{background:#fffbe6;border:1px solid var(--ring);padding:12px 14px;border-radius:12px;margin-bottom:10px}
-    .kbd{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; background:#f3f4f6;border:1px solid #e5e7eb;padding:2px 6px;border-radius:6px}
     .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
-    .thumb{aspect-ratio:4/3;border-radius:14px;background:#f7f7f7 center/cover no-repeat;border:1px dashed #e5e7eb;display:block}
-    .media{aspect-ratio:16/9;border-radius:16px;background:#f7f7f7;display:grid;place-items:center;color:var(--ink-soft);border:1px dashed #e5e7eb}
+    .thumb{aspect-ratio:4/3;border-radius:14px;background:#f7f3ec center/cover no-repeat;border:1px dashed #e5dccb;display:block}
+    .media{aspect-ratio:16/9;border-radius:16px;background:#f7f3ec;display:grid;place-items:center;color:var(--ink-soft);border:1px dashed #e5dccb}
+
     footer{max-width:1100px;margin:24px auto 12px;color:var(--ink-soft);font-size:14px;padding:0 16px}
   </style>
 </head>
@@ -66,13 +92,13 @@
   <div class="bar">
     <div class="container bar-inner">
       <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
+        <div class="logo" aria-label="🐾 Hacheeto paw logo"></div>
         <strong>Hacheeto · Big Adventure</strong>
       </div>
       <div class="nav">
-        <a class="btn ghost small" href="#story">Read</a>
-        <a class="btn ghost small" href="#gallery">Pictures</a>
-        <a class="btn ghost small" href="#media">Videos</a>
+        <a class="btn small" href="#story">Read</a>
+        <a class="btn small" href="#gallery">Pictures</a>
+        <a class="btn small" href="#media">Videos</a>
         <a class="btn alt small" id="downloadBtn" href="#">Download PDF</a>
       </div>
     </div>
@@ -81,15 +107,17 @@
   <!-- Hero -->
   <section class="hero">
     <div class="container hero-grid">
-      <div class="hero-card">
+      <div class="hero-card hero">
         <h1>Hacheeto’s Big Adventure</h1>
-        <p>A cheerful storybook with big buttons, simple navigation, pictures, and short videos.</p>
+        <p>Big buttons. Simple navigation. Pictures and short videos for kids and grownups.</p>
         <div class="pill-row">
-          <a class="pill" href="#story">Children</a>
-          <a class="pill" href="#gallery">Parents</a>
-          <a class="pill" href="#media">Teachers</a>
-          <a class="pill" href="#story">Ministries</a>
+          <a class="pill" href="#children">Children</a>
+          <a class="pill" href="#parents">Parents</a>
+          <a class="pill" href="#teachers">Teachers</a>
+          <a class="pill" href="#ministries">Ministries</a>
           <a class="pill alt" href="#subscribe-box">Subscribe</a>
+          <a class="pill" href="#about">About</a>
+          <a class="pill" href="#contact">Contact</a>
         </div>
       </div>
       <div class="hero-img" id="heroImg" role="img" aria-label="Hacheeto hero"></div>
@@ -109,24 +137,43 @@
           </div>
         </div>
         <div class="controls">
-          <a class="btn" id="prevBtn" aria-label="Previous page">◀ Prev</a>
-          <div class="dotset" id="dots"></div>
-          <a class="btn" id="nextBtn" aria-label="Next page">Next ▶</a>
+          <a class="btn small" id="prevBtn" aria-label="Previous page">◀ Prev</a>
+          <div class="dotset" id="dots" aria-label="Page dots"></div>
+          <a class="btn small" id="nextBtn" aria-label="Next page">Next ▶</a>
         </div>
       </section>
 
-      <!-- Right column: gallery + videos + pdf + subscribe -->
+      <!-- Right column: gallery + videos + audience/PDF/subscribe/about/contact -->
       <div style="display:grid;gap:18px">
         <section id="gallery" class="card" aria-label="Gallery">
           <h3>Picture Gallery</h3>
-          <div class="note">Images must be in the repo root next to <span class="kbd">index.html</span>. Expected files: <strong>hachito.webp</strong> (Page 1) and <strong>img1.png</strong>–<strong>img6.png</strong> (Pages 2–7). Supported formats: <strong>.png</strong>, <strong>.jpg</strong>, <strong>.webp</strong>. If a filename doesn’t load, open it directly (e.g. <span class="kbd">/img3.png</span>) to confirm the exact name. Missing files show ⚠️.</div>
           <div class="gallery" id="thumbs"></div>
         </section>
 
         <section id="media" class="card" aria-label="Videos">
           <h3>Videos</h3>
-          <div class="media" id="videoSlot">Choose a clip below to play.</div>
+          <div class="media" id="videoSlot">Loading a preview…</div>
           <div id="videoButtons" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+        </section>
+
+        <section id="children" class="card" aria-label="Children">
+          <h3>For Children</h3>
+          <p>Tap “Read” to flip through Hacheeto’s story with big friendly buttons.</p>
+        </section>
+
+        <section id="parents" class="card" aria-label="Parents">
+          <h3>For Parents</h3>
+          <p>Use the gallery for bedtime and the PDF for offline printing.</p>
+        </section>
+
+        <section id="teachers" class="card" aria-label="Teachers">
+          <h3>For Teachers</h3>
+          <p>Short video clips are great for circle time and prompts.</p>
+        </section>
+
+        <section id="ministries" class="card" aria-label="Ministries">
+          <h3>For Ministries</h3>
+          <p>Easy, no-login story access for groups and events.</p>
         </section>
 
         <section class="card" aria-label="Get the book">
@@ -139,6 +186,16 @@
           <p>Replace this with your email form or link later.</p>
           <p><a class="btn" href="#" aria-label="Subscribe">Subscribe</a></p>
         </section>
+
+        <section id="about" class="card" aria-label="About">
+          <h3>About</h3>
+          <p>Hacheeto is a playful project inspired by kids’ curiosity and kindness.</p>
+        </section>
+
+        <section id="contact" class="card" aria-label="Contact">
+          <h3>Contact</h3>
+          <p>Email: <a href="mailto:team@hacheeto.com">team@hacheeto.com</a></p>
+        </section>
       </div>
     </div>
   </div>
@@ -148,9 +205,9 @@
   </footer>
 
   <script>
-    // Content lists
+    // ===== Content lists (keep filenames exactly as in repo root) =====
     const PAGES = [
-      { title: 'Page 1 · Wake Up, Hacheeto!', text: 'Morning light tickled Hacheeto\'s whiskers. “Adventure time!” he yawned, buttoning his bright red hoodie.', img: 'hachito.webp' },
+      { title: 'Page 1 · Wake Up, Hacheeto!', text: 'Morning light tickled Hacheeto\\'s whiskers. “Adventure time!” he yawned, buttoning his bright red hoodie.', img: 'hachito.webp' },
       { title: 'Page 2 · The Button Path', text: 'Big friendly buttons lined the path. Hacheeto tapped the first one—boop!—and a bluebird sang.', img: 'img1.png' },
       { title: 'Page 3 · Crossing the Creek', text: 'A tiny bridge wobbled. “Steady, paws,” said Hacheeto, eyes bright with courage.', img: 'img2.png' },
       { title: 'Page 4 · The Helpful Fox', text: '“Need a map?” asked a fox, offering a scroll with a smile. Hacheeto bowed, “Thank you!”', img: 'img3.png' },
@@ -161,14 +218,15 @@
     const PDF_URL = 'Hacheeto_Big_Adventure_PrintReady.pdf';
     const VIDEOS = [
       { label: 'Gets Wings (jacket)', file: 'hacheeto gets wings his silly jacket.mp4' },
-      { label: 'Excited',              file: 'hacheto excited.mp4' },
+      { label: 'Excited',              file: 'hacheto excited.mp4' }, // default preview
       { label: 'Dreams & Flies',       file: 'hachito dreams and flies.mp4' },
       { label: 'Flying (source)',      file: 'hachito flying_851257644_source.mp4' },
       { label: 'Hachito is Here',      file: 'hachito is here.mp4' },
       { label: 'Hallway Run',          file: 'hajito cartoon running thruthe hallway .mp4' }
     ];
+    const DEFAULT_VIDEO = 'hacheto excited.mp4';
 
-    // Elements
+    // ===== Elements =====
     let i = 0;
     const illus = document.getElementById('illus');
     const pageTitle = document.getElementById('pageTitle');
@@ -182,29 +240,35 @@
     const downloadBtn = document.getElementById('downloadBtn');
     const heroImg = document.getElementById('heroImg');
 
-    // Set hero & PDF
+    // ===== Initial wiring =====
+    year.textContent = new Date().getFullYear();
     heroImg.style.backgroundImage = 'url(hachito.webp)';
     pdfLink.href = PDF_URL; downloadBtn.href = PDF_URL;
 
-    // Build dots & gallery
+    // ===== Build dots & gallery thumbnails =====
     function buildNav(){
       dots.innerHTML = '';
       thumbs.innerHTML = '';
-
       PAGES.forEach((p,idx)=>{
+        // dots
         const d = document.createElement('div');
         d.className = 'dot';
         if(idx===i) d.classList.add('active');
         d.addEventListener('click',()=>go(idx));
         dots.appendChild(d);
 
+        // thumbs
         const t = document.createElement('a');
         t.className = 'thumb';
         t.href = '#story';
         t.title = p.title;
         t.style.backgroundImage = `url(${p.img})`;
-        t.onerror = ()=>{ t.textContent = '⚠️'; t.style.background='none'; };
         t.addEventListener('click',()=>go(idx));
+        // image fallback: show ⚠️ if missing
+        const tester = new Image();
+        tester.onload = ()=>{};
+        tester.onerror = ()=>{ t.textContent = '⚠️'; t.style.background='none'; t.style.display='grid'; t.style.placeItems='center'; };
+        tester.src = p.img;
         thumbs.appendChild(t);
       });
     }
@@ -223,16 +287,16 @@
     prevBtn.addEventListener('click',()=>go(i-1));
     nextBtn.addEventListener('click',()=>go(i+1));
 
-    // Videos
+    // ===== Videos =====
     function playMp4(file){
       const slot = document.getElementById('videoSlot');
+      slot.innerHTML = '';
       const video = document.createElement('video');
       video.controls = true;
       video.style.width = '100%';
       video.style.borderRadius = '16px';
       video.src = file;
       video.onerror = ()=>{ slot.textContent = '⚠️ Video missing: '+file; };
-      slot.innerHTML = '';
       slot.appendChild(video);
     }
     function buildVideoButtons(){
@@ -247,8 +311,9 @@
       });
     }
 
-    year.textContent = new Date().getFullYear();
-    buildNav(); render(); buildVideoButtons();
+    // ===== Init =====
+    buildNav(); render(); buildVideoButtons(); playMp4(DEFAULT_VIDEO);
   </script>
 </body>
 </html>
+
