@@ -65,7 +65,7 @@
       <div class="logo">H</div>
       <div class="title">
         <h1>Hacheeto’s Big Adventure</h1>
-        <p>Simple, fast, and consistent. Buttons for navigation. Pictures load from the repo root. Videos play from the root too.</p>
+        <p>Simple, fast, and consistent. Buttons for navigation. Pictures load from the repo root. Videos play from the repo root too.</p>
       </div>
     </header>
 
@@ -86,22 +86,18 @@
 
     <section id="gallery" class="card" aria-label="Gallery">
       <h3 style="margin-top:0">Picture Gallery</h3>
-      <div class="note">Place your images in the repo root (same folder as index.html) and list their filenames in <span class="kbd">PAGES</span> below. Supports <strong>.png</strong>, <strong>.jpg</strong>, and <strong>.webp</strong>.</div>
+      <div class="note">Images live in the repo root. Supports <strong>.png</strong>, <strong>.jpg</strong>, <strong>.webp</strong>.</div>
       <div class="gallery" id="thumbs"></div>
     </section>
 
     <section id="media" class="card" aria-label="Videos">
       <h3 style="margin-top:0">Videos</h3>
-      <div class="media" id="videoSlot">Put your <span class="kbd">.mp4</span> in the repo root (next to index.html) and set its name below.</div>
-      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-        <button class="btn small" id="useMP4">Play local MP4</button>
-        <button class="btn small" id="useYouTube">Play YouTube</button>
-      </div>
+      <div class="media" id="videoSlot">Choose a clip below to play.</div>
+      <div id="videoButtons" style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"></div>
     </section>
 
     <section class="card" aria-label="Get the book">
       <h3 style="margin-top:0">Get the printable PDF</h3>
-      <p>Place your final print-ready PDF in the repo root and set the filename below.</p>
       <p><a class="link" id="pdfLink" href="#" target="_blank" rel="noopener">Open Hacheeto_Big_Adventure_PrintReady.pdf</a></p>
     </section>
 
@@ -111,19 +107,30 @@
   </main>
 
   <script>
-    // 🔧 CHANGE ONLY THESE VALUES TO MATCH YOUR FILES IN THE REPO ROOT
+    // 🔧 Use your actual files (exact names, case-sensitive)
     const PAGES = [
-      { title: 'Page 1 · Wake Up, Hacheeto!', text: 'Morning light tickled Hacheeto\\'s whiskers. “Adventure time!” he yawned, buttoning his bright red hoodie.', img: 'page-1.png' },
-      { title: 'Page 2 · The Button Path', text: 'Big friendly buttons lined the path. Hacheeto tapped the first one—boop!—and a bluebird sang.', img: 'page-2.webp' },
-      { title: 'Page 3 · Crossing the Creek', text: 'A tiny bridge wobbled. “Steady, paws,” said Hacheeto, eyes bright with courage.', img: 'page-3.jpg' },
-      { title: 'Page 4 · The Helpful Fox', text: '“Need a map?” asked a fox, offering a scroll with a smile. Hacheeto bowed, “Thank you!”', img: 'page-4.png' },
-      { title: 'Page 5 · Home for Cocoa', text: 'Stars winked hello. Hacheeto padded home, cocoa in paw, dreams full of tomorrow’s wonders.', img: 'page-5.png' }
+      { title: 'Page 1 · Wake Up, Hacheeto!', text: 'Morning light tickled Hacheeto\\'s whiskers. “Adventure time!” he yawned, buttoning his bright red hoodie.', img: 'hachito.webp' },
+      { title: 'Page 2 · The Button Path', text: 'Big friendly buttons lined the path. Hacheeto tapped the first one—boop!—and a bluebird sang.', img: 'hachito1.png' },
+      { title: 'Page 3 · Crossing the Creek', text: 'A tiny bridge wobbled. “Steady, paws,” said Hacheeto, eyes bright with courage.', img: 'hachito2.png' },
+      { title: 'Page 4 · The Helpful Fox', text: '“Need a map?” asked a fox, offering a scroll with a smile. Hacheeto bowed, “Thank you!”', img: 'hachito3.png' },
+      { title: 'Page 5 · Dreaming Big', text: 'Stars winked hello. Hacheeto padded home, cocoa in paw, dreams full of tomorrow’s wonders.', img: 'hachito4.png' },
+      { title: 'Page 6 · Flying High', text: '“I can soar!” he cried. His jacket flapped like wings as he leapt into the night sky.', img: 'hachito5.png' },
+      { title: 'Page 7 · Adventure Continues', text: 'From high above, Hacheeto saw paths yet to explore. His silly jacket carried him into tomorrow.', img: 'hachito6.png' }
     ];
-    const PDF_URL = 'Hacheeto_Big_Adventure_PrintReady.pdf'; // set to your real file in root
-    const LOCAL_MP4 = 'teaser.mp4'; // set to your real .mp4 filename in root
-    const YT_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'; // replace or ignore
 
-    // State & elements
+    const PDF_URL = 'Hacheeto_Big_Adventure_PrintReady.pdf';
+
+    // Local MP4s in repo root
+    const VIDEOS = [
+      { label: 'Gets Wings (jacket)', file: 'hacheeto gets wings his silly jacket.mp4' },
+      { label: 'Excited',              file: 'hacheto excited.mp4' },
+      { label: 'Dreams & Flies',       file: 'hachito dreams and flies.mp4' },
+      { label: 'Flying (source)',      file: 'hachito flying_851257644_source.mp4' },
+      { label: 'Hachito is Here',      file: 'hachito is here.mp4' },
+      { label: 'Hallway Run',          file: 'hajito cartoon running thruthe hallway .mp4' }
+    ];
+
+    // Elements & state
     let i = 0;
     const illus = document.getElementById('illus');
     const pageTitle = document.getElementById('pageTitle');
@@ -136,10 +143,8 @@
     const pdfLink = document.getElementById('pdfLink');
     const downloadBtn = document.getElementById('downloadBtn');
 
-    // Init PDF & nav
     pdfLink.href = PDF_URL; downloadBtn.href = PDF_URL;
 
-    // Build dots & gallery thumbnails dynamically from PAGES
     function buildNav(){
       dots.innerHTML = '';
       thumbs.innerHTML = '';
@@ -174,19 +179,26 @@
     prevBtn.addEventListener('click',()=>go(i-1));
     nextBtn.addEventListener('click',()=>go(i+1));
 
-    // Video controls
-    document.getElementById('useMP4').addEventListener('click',()=>{
+    // Video helpers
+    function playMp4(file){
       document.getElementById('videoSlot').innerHTML =
-        `<video controls width="100%" src="${LOCAL_MP4}" style="border-radius:16px"></video>`;
-    });
-    document.getElementById('useYouTube').addEventListener('click',()=>{
-      const id = (YT_URL.split('v=')[1]||'').split('&')[0]||'';
-      document.getElementById('videoSlot').innerHTML =
-        `<iframe width="100%" height="315" src="https://www.youtube.com/embed/${id}" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
-    });
+        `<video controls width="100%" src="${file}" style="border-radius:16px"></video>`;
+    }
+    function buildVideoButtons(){
+      const wrap = document.getElementById('videoButtons');
+      wrap.innerHTML = '';
+      VIDEOS.forEach(v => {
+        const b = document.createElement('button');
+        b.className = 'btn small';
+        b.textContent = v.label;
+        b.addEventListener('click',()=>playMp4(v.file));
+        wrap.appendChild(b);
+      });
+    }
 
     year.textContent = new Date().getFullYear();
-    buildNav(); render();
+    buildNav(); render(); buildVideoButtons();
   </script>
 </body>
 </html>
+
