@@ -1,69 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hacheeto – Big Adventure</title>
-  <meta name="description" content="Hacheeto: a cheerful children's storybook with big buttons, pictures, and videos." />
-  <meta name="theme-color" content="#D4A373">
-  <!-- 🐾 Favicons (cache-busted) -->
-  <link rel="icon" href="favicon.ico?v=5" type="image/x-icon">
-  <link rel="icon" href="favicon.png?v=5" type="image/png">
-  <link rel="shortcut icon" href="favicon.ico?v=5" type="image/x-icon">
-  <link rel="apple-touch-icon" href="favicon.png?v=5">
-  <style>
-    html{scroll-behavior:smooth}
-    :root{ --bg:#FFF8E6; --ink:#3b2f2f; --ink-soft:#6b5b53; --brand:#8B5E34; --brand-2:#D4A373; --panel:#ffffff; --pill:#CDAA7D; --pill-2:#B08968 }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:var(--bg);color:var(--ink)}
-    .container{max-width:1100px;margin:0 auto}
-    /* Top bar */
-    .bar{position:sticky;top:0;background:rgba(255,255,255,.95);border-bottom:1px solid #eadfcf;z-index:40}
-    .bar-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:56px;height:56px;border-radius:50%;background:#fff url('favicon.png?v=5') center/cover no-repeat;box-shadow:0 6px 20px rgba(0,0,0,.12)}
-    .btn{border:0;background:var(--brand);color:#fff;border-radius:12px;padding:10px 14px;font-weight:700;text-decoration:none;display:inline-block;cursor:pointer}
-    .btn.small{padding:6px 10px}.btn.alt{background:var(--brand-2);color:#3b2f2f}
-    /* Hero */
-    .hero{padding:20px 16px 10px}
-    .pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-    .pill{background:var(--pill);color:#3b2f2f;padding:12px 16px;border-radius:999px;font-weight:800;text-decoration:none}
-    .pill.alt{background:var(--pill-2);color:#fff}
-    .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:center}
-    @media (max-width:900px){.hero-grid{grid-template-columns:1fr}}
-    .hero-card{background:var(--panel);border:1px solid #f0e6d7;border-radius:24px;padding:18px;box-shadow:0 6px 24px rgba(0,0,0,.06)}
-    .hero-card h1{margin:8px 0 6px;font-size:clamp(26px,4.4vw,44px)}
-    .hero-card p{margin:0;color:var(--ink-soft)}
-    .hero-img{border:1px dashed #e5dccb;border-radius:20px;overflow:hidden}
-    .hero-img img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;background:#f7f3ec}
-    /* Main */
-    .wrap{padding:0 16px 28px}
-    .main-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
-    @media (max-width:900px){.main-grid{grid-template-columns:1fr}}
-    .card{background:var(--panel);border:1px solid #f0e6d7;border-radius:20px;padding:18px}
-    /* Story */
-    .story{display:grid;grid-template-rows:auto 1fr auto;gap:12px;min-height:420px}
-    .page{display:grid;grid-template-columns:1fr 1.1fr;gap:18px;align-items:center}
-    @media (max-width:800px){.page{grid-template-columns:1fr}}
-    .illus-box{border:1px dashed #e5dccb;border-radius:16px;overflow:hidden;background:#f7f3ec}
-    .illus-box img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
-    .copy h2{margin:0 0 8px}
-    .copy p{margin:0;color:var(--ink-soft);line-height:1.6}
-    .controls{display:flex;justify-content:space-between;align-items:center}
-    .dotset{display:flex;gap:6px}
-    .dot{width:10px;height:10px;border-radius:999px;background:#e7dccb}
-    .dot.active{background:var(--brand-2)}
-    /* Gallery */
-    .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
-    .thumb{display:block;border:1px dashed #e5dccb;border-radius:14px;overflow:hidden;background:#f7f3ec}
-    .thumb img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
-    /* Video */
-    .media video{display:block;width:100%;border-radius:16px}
-    footer{max-width:1100px;margin:24px auto 12px;color:var(--ink-soft);font-size:14px;padding:0 16px}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hacheeto – Big Adventure</title>
+<meta name="theme-color" content="#D4A373" />
+<meta name="description" content="Hacheeto: a cheerful children's storybook with big buttons, pictures, and videos." />
+
+<!-- 🐾 Favicons: file + cache-bust + inline fallback (guaranteed paw) -->
+<link rel="icon" href="favicon.ico?v=6" type="image/x-icon" />
+<link rel="icon" href="favicon.png?v=6" type="image/png" />
+<link rel="apple-touch-icon" href="favicon.png?v=6">
+<!-- Inline SVG fallback (red paw on beige circle) -->
+<link rel="icon"
+      href='data:image/svg+xml;utf8,
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs><radialGradient id="g" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#FFF8E6"/><stop offset="100%" stop-color="#EED9B7"/></radialGradient></defs>
+  <circle cx="64" cy="64" r="62" fill="url(%23g)" stroke="#E3CDA7" stroke-width="4"/>
+  <g fill="#D23B3B">
+    <circle cx="38" cy="40" r="12"/><circle cx="64" cy="34" r="12"/><circle cx="90" cy="40" r="12"/>
+    <path d="M64 54c-18 0-36 14-32 28 3 10 18 16 32 16s29-6 32-16c4-14-14-28-32-28z"/>
+  </g>
+</svg>' />
+
+<style>
+  html{scroll-behavior:smooth}
+  :root{
+    --bg:#FFF8E6; --ink:#3b2f2f; --ink-soft:#6b5b53;
+    --brand:#8B5E34; --brand-2:#D4A373;
+    --panel:#ffffff; --pill:#CDAA7D; --pill-2:#B08968;
+    --border:#f0e6d7; --dash:#e5dccb;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:var(--bg);color:var(--ink)}
+  .container{max-width:1100px;margin:0 auto}
+
+  /* Top bar */
+  .bar{position:sticky;top:0;background:rgba(255,255,255,.95);border-bottom:1px solid var(--border);z-index:40}
+  .bar-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{width:56px;height:56px;border-radius:50%;background:#fff url('favicon.png?v=6') center/cover no-repeat;box-shadow:0 6px 20px rgba(0,0,0,.12)}
+  .btn{border:0;background:var(--brand);color:#fff;border-radius:12px;padding:10px 14px;font-weight:700;text-decoration:none;display:inline-block}
+  .btn.small{padding:6px 10px}.btn.alt{background:var(--brand-2);color:#3b2f2f}
+
+  /* Hero */
+  .hero{padding:20px 16px 10px}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:center}
+  @media (max-width:900px){.hero-grid{grid-template-columns:1fr}}
+  .hero-card{background:var(--panel);border:1px solid var(--border);border-radius:24px;padding:18px;box-shadow:0 6px 24px rgba(0,0,0,.06)}
+  .hero-card h1{margin:8px 0 6px;font-size:clamp(26px,4.4vw,44px)}
+  .hero-card p{margin:0;color:var(--ink-soft)}
+  .pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .pill{background:var(--pill);color:#3b2f2f;padding:12px 16px;border-radius:999px;font-weight:800;text-decoration:none}
+  .pill.alt{background:var(--pill-2);color:#fff}
+  .hero-img{border:1px dashed var(--dash);border-radius:20px;overflow:hidden}
+  .hero-img img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;background:#f7f3ec}
+
+  /* Main */
+  .wrap{padding:0 16px 28px}
+  .main-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
+  @media (max-width:900px){.main-grid{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:18px}
+
+  /* Story (CSS-only slider) */
+  .story{display:grid;grid-template-rows:auto 1fr auto;gap:12px;min-height:420px}
+  /* 7 radio pages */
+  .slides{position:relative}
+  .slide{display:none}
+  /* show the checked slide */
+  #p1:checked ~ .slides .s1,
+  #p2:checked ~ .slides .s2,
+  #p3:checked ~ .slides .s3,
+  #p4:checked ~ .slides .s4,
+  #p5:checked ~ .slides .s5,
+  #p6:checked ~ .slides .s6,
+  #p7:checked ~ .slides .s7{display:block}
+
+  .page{display:grid;grid-template-columns:1fr 1.1fr;gap:18px;align-items:center}
+  @media (max-width:800px){.page{grid-template-columns:1fr}}
+  .illus-box{border:1px dashed var(--dash);border-radius:16px;overflow:hidden;background:#f7f3ec}
+  .illus-box img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+  .copy h2{margin:0 0 8px}
+  .copy p{margin:0;color:var(--ink-soft);line-height:1.6}
+
+  .controls{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+  .dotset{display:flex;gap:6px}
+  .dot{width:10px;height:10px;border-radius:999px;background:#e7dccb}
+  /* active dot based on radio state */
+  #p1:checked ~ .controls .d1,
+  #p2:checked ~ .controls .d2,
+  #p3:checked ~ .controls .d3,
+  #p4:checked ~ .controls .d4,
+  #p5:checked ~ .controls .d5,
+  #p6:checked ~ .controls .d6,
+  #p7:checked ~ .controls .d7{background:var(--brand-2)}
+  .navbtn{cursor:pointer}
+
+  /* Gallery */
+  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .thumb{display:block;border:1px dashed var(--dash);border-radius:14px;overflow:hidden;background:#f7f3ec}
+  .thumb img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+
+  /* Video */
+  details{border:1px solid var(--border);border-radius:12px;padding:10px 12px;background:#fff}
+  details+details{margin-top:10px}
+  summary{cursor:pointer;font-weight:700;color:var(--ink)}
+  video{display:block;width:100%;border-radius:16px;margin-top:8px}
+
+  footer{max-width:1100px;margin:24px auto 12px;color:var(--ink-soft);font-size:14px;padding:0 16px}
+</style>
 </head>
 <body>
-  <!-- Sticky bar -->
+  <!-- Top bar -->
   <div class="bar">
     <div class="container bar-inner">
       <div class="brand">
@@ -95,7 +143,6 @@
           <a class="pill" href="#contact">Contact</a>
         </div>
       </div>
-      <!-- HTML-first hero: loads even with JS off -->
       <div class="hero-img"><img src="hachito.webp" alt="Hacheeto hero"></div>
     </div>
   </section>
@@ -103,27 +150,61 @@
   <!-- Main two-column body -->
   <div class="container wrap">
     <div class="main-grid">
-      <!-- Story left -->
+      <!-- STORY (CSS slider, no JS) -->
       <section id="story" class="card story" aria-label="Story reader">
-        <div class="page">
-          <div class="illus-box">
-            <img id="illusImg" src="hachito.webp" alt="Story illustration">
+        <!-- Radios (hidden) -->
+        <input type="radio" name="page" id="p1" checked hidden>
+        <input type="radio" name="page" id="p2" hidden>
+        <input type="radio" name="page" id="p3" hidden>
+        <input type="radio" name="page" id="p4" hidden>
+        <input type="radio" name="page" id="p5" hidden>
+        <input type="radio" name="page" id="p6" hidden>
+        <input type="radio" name="page" id="p7" hidden>
+
+        <div class="slides">
+          <div class="slide s1">
+            <div class="page">
+              <div class="illus-box"><img src="hachito.webp" alt="Page 1"></div>
+              <div class="copy">
+                <h2>Page 1 · Wake Up, Hacheeto!</h2>
+                <p>Morning light tickled Hacheeto’s whiskers. “Adventure time!” he yawned, buttoning his bright red hoodie.</p>
+              </div>
+            </div>
           </div>
-          <div class="copy">
-            <h2 id="pageTitle">Page 1 · Wake Up, Hacheeto!</h2>
-            <p id="pageText">Morning light tickled Hacheeto’s whiskers. “Adventure time!” he yawned, buttoning his bright red hoodie.</p>
-          </div>
+          <div class="slide s2"><div class="page"><div class="illus-box"><img src="img1.png" alt="Page 2"></div><div class="copy"><h2>Page 2 · The Button Path</h2><p>Big friendly buttons lined the path. Hacheeto tapped the first one—boop!—and a bluebird sang.</p></div></div></div>
+          <div class="slide s3"><div class="page"><div class="illus-box"><img src="img2.png" alt="Page 3"></div><div class="copy"><h2>Page 3 · Crossing the Creek</h2><p>A tiny bridge wobbled. “Steady, paws,” said Hacheeto, eyes bright with courage.</p></div></div></div>
+          <div class="slide s4"><div class="page"><div class="illus-box"><img src="img3.png" alt="Page 4"></div><div class="copy"><h2>Page 4 · The Helpful Fox</h2><p>“Need a map?” asked a fox, offering a scroll with a smile. Hacheeto bowed, “Thank you!”</p></div></div></div>
+          <div class="slide s5"><div class="page"><div class="illus-box"><img src="img4.png" alt="Page 5"></div><div class="copy"><h2>Page 5 · Dreaming Big</h2><p>Stars winked hello. Hacheeto padded home, cocoa in paw, dreams full of tomorrow’s wonders.</p></div></div></div>
+          <div class="slide s6"><div class="page"><div class="illus-box"><img src="img5.png" alt="Page 6"></div><div class="copy"><h2>Page 6 · Flying High</h2><p>“I can soar!” he cried. His jacket flapped like wings as he leapt into the night sky.</p></div></div></div>
+          <div class="slide s7"><div class="page"><div class="illus-box"><img src="img6.png" alt="Page 7"></div><div class="copy"><h2>Page 7 · Adventure Continues</h2><p>From high above, Hacheeto saw paths yet to explore. His silly jacket carried him into tomorrow.</p></div></div></div>
         </div>
+
         <div class="controls">
-          <button class="btn small" id="prevBtn" type="button" aria-label="Previous page">◀ Prev</button>
-          <div class="dotset" id="dots" aria-label="Page dots"></div>
-          <button class="btn small" id="nextBtn" type="button" aria-label="Next page">Next ▶</button>
+          <div>
+            <!-- Prev: each label points to previous radio -->
+            <label class="btn small navbtn" for="p1" onclick="document.getElementById('p1').checked=true">⟲ First</label>
+            <label class="btn small navbtn" for="p1" onclick="document.getElementById('p'+Math.max(1,[...document.querySelectorAll('input[name=page]')].findIndex(r=>r.checked)+1-1)).checked=true">◀ Prev</label>
+          </div>
+          <div class="dotset">
+            <label class="dot d1" for="p1" title="Go to page 1"></label>
+            <label class="dot d2" for="p2" title="Go to page 2"></label>
+            <label class="dot d3" for="p3" title="Go to page 3"></label>
+            <label class="dot d4" for="p4" title="Go to page 4"></label>
+            <label class="dot d5" for="p5" title="Go to page 5"></label>
+            <label class="dot d6" for="p6" title="Go to page 6"></label>
+            <label class="dot d7" for="p7" title="Go to page 7"></label>
+          </div>
+          <div>
+            <!-- Next: each label points to next radio -->
+            <label class="btn small navbtn" for="p7" onclick="document.getElementById('p'+Math.min(7,[...document.querySelectorAll('input[name=page]')].findIndex(r=>r.checked)+1+1)).checked=true">Next ▶</label>
+            <label class="btn small navbtn" for="p7" onclick="document.getElementById('p7').checked=true">⟳ Last</label>
+          </div>
         </div>
       </section>
 
       <!-- Right column -->
       <div style="display:grid;gap:18px">
-        <!-- HTML-first gallery (always visible) -->
+        <!-- GALLERY (pure HTML) -->
         <section id="gallery" class="card" aria-label="Gallery">
           <h3>Picture Gallery</h3>
           <div class="gallery">
@@ -138,27 +219,70 @@
           </div>
         </section>
 
-        <!-- HTML-first video (always shows a player) -->
+        <!-- VIDEOS (each playable without JS) -->
         <section id="media" class="card" aria-label="Videos">
           <h3>Videos</h3>
-          <div class="media">
-            <video id="videoPlayer" controls preload="metadata" poster="hachito.webp">
+
+          <details open>
+            <summary>Hachito dances (default)</summary>
+            <video controls preload="metadata" poster="hachito.webp">
               <source src="hachito%20dances.mp4" type="video/mp4">
-              Your browser does not support MP4 playback.
             </video>
-          </div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
-            <button class="btn small" data-src="hachito%20dances.mp4" type="button">Dances</button>
-            <button class="btn small" data-src="hacheeto%20gets%20wings%20his%20silly%20jacket.mp4" type="button">Gets Wings</button>
-            <button class="btn small" data-src="hacheto%20excited.mp4" type="button">Excited</button>
-            <button class="btn small" data-src="hacheto%20gallops.mp4" type="button">Gallops</button>
-            <button class="btn small" data-src="hachito%20dreams%20and%20flies.mp4" type="button">Dreams & Flies</button>
-            <button class="btn small" data-src="hachito%20flying_851257644_source.mp4" type="button">Flying (source)</button>
-            <button class="btn small" data-src="hachito%20is%20here.mp4" type="button">Is Here</button>
-            <button class="btn small" data-src="hachito%20mobilize.mp4" type="button">Mobilize</button>
-            <button class="btn small" data-src="hachito%20wakes%20up%20ready.mp4" type="button">Wakes Up Ready</button>
-            <button class="btn small" data-src="hajito%20cartoon%20running%20thruthe%20hallway%20.mp4" type="button">Hallway Run</button>
-          </div>
+          </details>
+
+          <details><summary>Gets Wings (jacket)</summary>
+            <video controls preload="metadata" poster="hachito.webp">
+              <source src="hacheeto%20gets%20wings%20his%20silly%20jacket.mp4" type="video/mp4">
+            </video>
+          </details>
+
+          <details><summary>Excited</summary>
+            <video controls preload="metadata" poster="hachito.webp">
+              <source src="hacheto%20excited.mp4" type="video/mp4">
+            </video>
+          </details>
+
+          <details><summary>Gallops</summary>
+            <video controls preload="metadata" poster="hachito.webp">
+              <source src="hacheto%20gallops.mp4" type="video/mp4">
+            </video>
+          </details>
+
+          <details><summary>Dreams & Flies</summary>
+            <video controls preload="metadata" poster="hachito.webp">
+              <source src="hachito%20dreams%20and%20flies.mp4" type="video/mp4">
+            </video>
+          </details>
+
+          <details><summary>Flying (source)</summary>
+            <video controls preload="metadata" poster="hachito.webp">
+              <source src="hachito%20flying_851257644_source.mp4" type="video/mp4">
+            </video>
+          </details>
+
+          <details><summary>Hachito is Here</summary>
+            <video controls preload="metadata" poster="hachito.webp">
+              <source src="hachito%20is%20here.mp4" type="video/mp4">
+            </video>
+          </details>
+
+          <details><summary>Mobilize</summary>
+            <video controls preload="metadata" poster="hachito.webp">
+              <source src="hachito%20mobilize.mp4" type="video/mp4">
+            </video>
+          </details>
+
+          <details><summary>Wakes Up Ready</summary>
+            <video controls preload="metadata" poster="hachito.webp">
+              <source src="hachito%20wakes%20up%20ready.mp4" type="video/mp4">
+            </video>
+          </details>
+
+          <details><summary>Hallway Run</summary>
+            <video controls preload="metadata" poster="hachito.webp">
+              <source src="hajito%20cartoon%20running%20thruthe%20hallway%20.mp4" type="video/mp4">
+            </video>
+          </details>
         </section>
 
         <section id="children" class="card" aria-label="Children">
@@ -194,75 +318,8 @@
     <div class="container">© <span id="year"></span> Hacheeto. All rights reserved.</div>
   </footer>
 
-  <!-- Minimal ES5 JS -->
-  <script>
-  (function(){
-    // Year
-    var y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
-
-    // Story pages (exact filenames)
-    var PAGES = [
-      { title:'Page 1 · Wake Up, Hacheeto!', text:'Morning light tickled Hacheeto\\'s whiskers. “Adventure time!” he yawned, buttoning his bright red hoodie.', img:'hachito.webp' },
-      { title:'Page 2 · The Button Path', text:'Big friendly buttons lined the path. Hacheeto tapped the first one—boop!—and a bluebird sang.', img:'img1.png' },
-      { title:'Page 3 · Crossing the Creek', text:'A tiny bridge wobbled. “Steady, paws,” said Hacheeto, eyes bright with courage.', img:'img2.png' },
-      { title:'Page 4 · The Helpful Fox', text:'“Need a map?” asked a fox, offering a scroll with a smile. Hacheeto bowed, “Thank you!”', img:'img3.png' },
-      { title:'Page 5 · Dreaming Big', text:'Stars winked hello. Hacheeto padded home, cocoa in paw, dreams full of tomorrow’s wonders.', img:'img4.png' },
-      { title:'Page 6 · Flying High', text:'“I can soar!” he cried. His jacket flapped like wings as he leapt into the night sky.', img:'img5.png' },
-      { title:'Page 7 · Adventure Continues', text:'From high above, Hacheeto saw paths yet to explore. His silly jacket carried him into tomorrow.', img:'img6.png' }
-    ];
-
-    // Elements
-    var i = 0;
-    var illus = document.getElementById('illusImg');
-    var titleEl = document.getElementById('pageTitle');
-    var textEl  = document.getElementById('pageText');
-    var dots = document.getElementById('dots');
-    var prevBtn = document.getElementById('prevBtn');
-    var nextBtn = document.getElementById('nextBtn');
-
-    function drawDots(){
-      if (!dots) return;
-      dots.innerHTML = '';
-      for (var n=0; n<PAGES.length; n++){
-        var d = document.createElement('div');
-        d.className = 'dot' + (n===i ? ' active' : '');
-        (function(idx){
-          d.addEventListener('click', function(){ i = idx; render(); });
-        })(n);
-        dots.appendChild(d);
-      }
-    }
-    function render(){
-      var p = PAGES[i];
-      if (illus && p.img) illus.src = p.img;
-      if (titleEl) titleEl.textContent = p.title || '';
-      if (textEl)  textEl.textContent  = p.text  || '';
-      drawDots();
-      if (prevBtn) prevBtn.disabled = (i===0);
-      if (nextBtn) nextBtn.disabled = (i===PAGES.length-1);
-    }
-    if (prevBtn) prevBtn.addEventListener('click', function(){ i = Math.max(0, i-1); render(); });
-    if (nextBtn) nextBtn.addEventListener('click', function(){ i = Math.min(PAGES.length-1, i+1); render(); });
-    render();
-
-    // Video switching (encode spaces)
-    var player = document.getElementById('videoPlayer');
-    function useVideo(encoded){
-      if (!player) return;
-      player.innerHTML = '';
-      var s = document.createElement('source');
-      s.type = 'video/mp4';
-      s.src = encoded;
-      player.appendChild(s);
-      try { player.load(); player.play().catch(function(){}); } catch(e){}
-    }
-    var btns = document.querySelectorAll('[data-src]');
-    for (var b=0; b<btns.length; b++){
-      (function(btn){
-        btn.addEventListener('click', function(){ useVideo(btn.getAttribute('data-src')); });
-      })(btns[b]);
-    }
-  })();
-  </script>
+  <!-- Tiny helper to set the year (optional). Page works without it. -->
+  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
 </body>
 </html>
+
