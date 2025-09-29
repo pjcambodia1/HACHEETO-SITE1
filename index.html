@@ -7,10 +7,10 @@
 <title>Hacheeto – Big Adventure</title>
 <meta name="description" content="Stories and pictures the whole family can enjoy. Follow Hacheeto's big adventure with buttons, pictures, and short videos." />
 
-<!-- Favicons (red paw in beige circle) + cache-bust -->
-<link rel="icon" href="favicon.ico?v=103" type="image/x-icon">
-<link rel="icon" href="favicon.png?v=103" type="image/png">
-<link rel="apple-touch-icon" href="favicon.png?v=103">
+<!-- 🐾 Favicons (red paw) -->
+<link rel="icon" href="favicon.ico?v=104" type="image/x-icon">
+<link rel="icon" href="favicon.png?v=104" type="image/png">
+<link rel="apple-touch-icon" href="favicon.png?v=104">
 
 <style>
   :root{
@@ -23,16 +23,16 @@
   body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:var(--bg);color:var(--ink)}
   .container{max-width:1100px;margin:0 auto}
 
-  /* Top bar — consistent */
+  /* Top bar */
   .bar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);z-index:40}
   .bar-inner{display:flex;align-items:center;justify-content:space-between;padding:10px 16px}
   .brand{display:flex;align-items:center;gap:12px}
-  .logo{width:56px;height:56px;border-radius:50%;background:#fff url('favicon.png?v=103') center/cover no-repeat;box-shadow:0 6px 20px rgba(0,0,0,.12)}
+  .logo{width:56px;height:56px;border-radius:50%;background:#fff url('favicon.png?v=104') center/cover no-repeat;box-shadow:0 6px 20px rgba(0,0,0,.12)}
   .btn{border:0;background:var(--brand);color:#fff;border-radius:12px;padding:8px 14px;font-weight:700;text-decoration:none;cursor:pointer}
   .btn.small{padding:6px 10px}
   .btn.alt{background:var(--brand-2);color:#3b2f2f}
 
-  /* Hero — text left, image right */
+  /* Hero (text left, image right) */
   .hero{padding:20px 16px 10px}
   .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:center}
   @media(max-width:900px){.hero-grid{grid-template-columns:1fr}}
@@ -74,7 +74,7 @@
   .ytbtn{display:inline-flex;align-items:center;gap:8px;background:#FF0000;color:#fff;border-radius:999px;padding:8px 14px;border:0;cursor:pointer;font-weight:800;letter-spacing:.2px}
   .ytbtn .play{width:0;height:0;border-left:10px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent}
 
-  footer{max-width:1100px;margin:24px auto 12px;color:var(--ink-soft);font-size:14px;padding:0 16px}
+  footer{max-width:1100px;margin:24px auto 12px;color:#6b5b53;font-size:14px;padding:0 16px}
 </style>
 </head>
 <body>
@@ -95,7 +95,7 @@
   </div>
 </div>
 
-<!-- Hero (text left, image right) -->
+<!-- Hero -->
 <section class="hero">
   <div class="container hero-grid">
     <div class="hero-card">
@@ -109,18 +109,18 @@
         <a class="pill alt" href="#subscribe">Subscribe</a>
       </div>
     </div>
-    <div class="hero-img"><img src="hachito.webp?v=103" alt="Hero image"></div>
+    <div class="hero-img"><img src="hachito.webp?v=104" alt="Hero image"></div>
   </div>
 </section>
 
 <!-- Main -->
 <div class="container wrap">
   <div class="main-grid">
-    <!-- Story (left) -->
+    <!-- Story -->
     <section id="story" class="card" aria-label="Story reader">
       <div class="page">
         <div class="illus-box">
-          <img id="illusImg" src="hachito.webp?v=103" alt="Story illustration">
+          <img id="illusImg" src="hachito.webp?v=104" alt="Story illustration">
         </div>
         <div class="copy">
           <h2 id="pageTitle">Page 1 · Wake Up, Hacheeto!</h2>
@@ -139,14 +139,14 @@
       <section id="gallery" class="card" aria-label="Gallery">
         <h3>Picture Gallery</h3>
         <div class="gallery">
-          <a class="thumb" href="#story"><img src="hachito.webp?v=103" alt="Page 1"></a>
-          <a class="thumb" href="#story"><img src="img1.png?v=103" alt="Page 2"></a>
-          <a class="thumb" href="#story"><img src="img2.png?v=103" alt="Page 3"></a>
-          <a class="thumb" href="#story"><img src="img3.png?v=103" alt="Page 4"></a>
-          <a class="thumb" href="#story"><img src="img4.png?v=103" alt="Page 5"></a>
-          <a class="thumb" href="#story"><img src="img5.png?v=103" alt="Page 6"></a>
-          <a class="thumb" href="#story"><img src="img6.png?v=103" alt="Page 7"></a>
-          <a class="thumb" href="#story"><img src="Img8.png?v=103" alt="Extra"></a>
+          <a class="thumb" href="#story"><img src="hachito.webp?v=104" alt="Page 1"></a>
+          <a class="thumb" href="#story"><img src="img1.png?v=104" alt="Page 2"></a>
+          <a class="thumb" href="#story"><img src="img2.png?v=104" alt="Page 3"></a>
+          <a class="thumb" href="#story"><img src="img3.png?v=104" alt="Page 4"></a>
+          <a class="thumb" href="#story"><img src="img4.png?v=104" alt="Page 5"></a>
+          <a class="thumb" href="#story"><img src="img5.png?v=104" alt="Page 6"></a>
+          <a class="thumb" href="#story"><img src="img6.png?v=104" alt="Page 7"></a>
+          <a class="thumb" href="#story"><img src="Img8.png?v=104" alt="Extra"></a>
         </div>
       </section>
 
@@ -155,12 +155,12 @@
 
         <!-- Player slot -->
         <div class="media" id="videoSlot">
-          <video id="player" controls preload="metadata" poster="hachito.webp?v=103">
+          <video id="player" controls preload="metadata" poster="hachito.webp?v=104">
             <source src="hachito%20dances.mp4" type="video/mp4">
           </video>
         </div>
 
-        <!-- Dropdown + quick buttons + separate YouTube button -->
+        <!-- Dropdown + quick buttons + YouTube button -->
         <div class="video-controls">
           <select id="videoSelect" class="video-select" aria-label="Choose a video">
             <option value="hachito%20dances.mp4">Dances (default)</option>
@@ -176,9 +176,11 @@
           </select>
           <button class="btn small" id="playSelected" type="button">Play Selected</button>
 
+          <!-- keep a couple of handy quick buttons -->
           <button class="btn small vbtn" data-src="hachito%20dances.mp4" type="button">Dances</button>
           <button class="btn small vbtn" data-src="hacheto%20excited.mp4" type="button">Excited</button>
 
+          <!-- separate YouTube button (classic red) -->
           <button class="ytbtn" id="ytBtn" type="button" aria-label="Play on YouTube">
             <span class="play"></span> Watch on YouTube
           </button>
@@ -197,18 +199,22 @@
   // Year
   var y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear();
 
-  // Story — Prev/Next + dots (ES5)
+  // ----- Story slider (no blank image) -----
   var PAGES=[
-    {title:'Page 1 · Wake Up, Hacheeto!',text:'Morning light tickled Hacheeto\\'s whiskers. “Adventure time!” he yawned, buttoning his bright red hoodie.',img:'hachito.webp?v=103'},
-    {title:'Page 2 · The Button Path',text:'Big friendly buttons lined the path. Hacheeto tapped the first one—boop!—and a bluebird sang.',img:'img1.png?v=103'},
-    {title:'Page 3 · Crossing the Creek',text:'A tiny bridge wobbled. “Steady, paws,” said Hacheeto, eyes bright with courage.',img:'img2.png?v=103'},
-    {title:'Page 4 · The Helpful Fox',text:'“Need a map?” asked a fox, offering a scroll with a smile. Hacheeto bowed, “Thank you!”',img:'img3.png?v=103'},
-    {title:'Page 5 · Dreaming Big',text:'Stars winked hello. Hacheeto padded home, cocoa in paw, dreams full of tomorrow’s wonders.',img:'img4.png?v=103'},
-    {title:'Page 6 · Flying High',text:'“I can soar!” he cried. His jacket flapped like wings as he leapt into the night sky.',img:'img5.png?v=103'},
-    {title:'Page 7 · Adventure Continues',text:'From high above, Hacheeto saw paths yet to explore. His silly jacket carried him into tomorrow.',img:'img6.png?v=103'}
+    {title:'Page 1 · Wake Up, Hacheeto!',text:'Morning light tickled Hacheeto\\'s whiskers. “Adventure time!” he yawned, buttoning his bright red hoodie.',img:'hachito.webp?v=104'},
+    {title:'Page 2 · The Button Path',text:'Big friendly buttons lined the path. Hacheeto tapped the first one—boop!—and a bluebird sang.',img:'img1.png?v=104'},
+    {title:'Page 3 · Crossing the Creek',text:'A tiny bridge wobbled. “Steady, paws,” said Hacheeto, eyes bright with courage.',img:'img2.png?v=104'},
+    {title:'Page 4 · The Helpful Fox',text:'“Need a map?” asked a fox, offering a scroll with a smile. Hacheeto bowed, “Thank you!”',img:'img3.png?v=104'},
+    {title:'Page 5 · Dreaming Big',text:'Stars winked hello. Hacheeto padded home, cocoa in paw, dreams full of tomorrow’s wonders.',img:'img4.png?v=104'},
+    {title:'Page 6 · Flying High',text:'“I can soar!” he cried. His jacket flapped like wings as he leapt into the night sky.',img:'img5.png?v=104'},
+    {title:'Page 7 · Adventure Continues',text:'From high above, Hacheeto saw paths yet to explore. His silly jacket carried him into tomorrow.',img:'img6.png?v=104'}
   ];
-  var i=0,illus=document.getElementById('illusImg'),titleEl=document.getElementById('pageTitle'),textEl=document.getElementById('pageText'),
-      dots=document.getElementById('dots'),prevBtn=document.getElementById('prevBtn'),nextBtn=document.getElementById('nextBtn');
+  var i=0, illus=document.getElementById('illusImg'), titleEl=document.getElementById('pageTitle'),
+      textEl=document.getElementById('pageText'), dots=document.getElementById('dots'),
+      prevBtn=document.getElementById('prevBtn'), nextBtn=document.getElementById('nextBtn');
+
+  // Fallback if an image is missing
+  illus.onerror=function(){ this.style.background='#f7f3ec'; };
 
   function drawDots(){
     dots.innerHTML='';
@@ -232,19 +238,20 @@
   nextBtn.onclick=function(){ i=Math.min(PAGES.length-1,i+1); render(); };
   render();
 
-  // Thumbs jump to page
+  // Thumbs jump to that page
   var thumbs=document.querySelectorAll('#gallery .thumb');
   for(var t=0;t<thumbs.length && t<PAGES.length;t++){
     (function(idx,el){ el.onclick=function(){ i=idx; render(); }; })(t,thumbs[t]);
   }
 
-  // Videos
+  // ----- Videos -----
   var slot=document.getElementById('videoSlot');
   function playMp4(src){
-    slot.innerHTML='<video controls preload="metadata" style="width:100%;border-radius:16px" poster="hachito.webp?v=103"><source src="'+src+'" type="video/mp4"></video>';
+    // NOTE: keep spaces URL-encoded in HTML (already done in dropdown/btns)
+    slot.innerHTML='<video controls preload="metadata" style="width:100%;border-radius:16px" poster="hachito.webp?v=104"><source src="'+src+'" type="video/mp4"></video>';
   }
 
-  // Dropdown
+  // Dropdown play
   var sel=document.getElementById('videoSelect');
   var playSel=document.getElementById('playSelected');
   if(playSel) playSel.onclick=function(){ if(sel && sel.value){ playMp4(sel.value); } };
