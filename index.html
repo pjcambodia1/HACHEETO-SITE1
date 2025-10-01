@@ -108,7 +108,7 @@
 <section id="gallery" class="mx-auto max-w-6xl px-4 py-12">
   <h2 class="text-2xl font-bold mb-6">Illustration Gallery</h2>
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-    <!-- Template used by script to mirror story pages -->
+    <!-- Template (script mirrors story pages) -->
     <template id="thumbTpl">
       <figure class="group rounded-3xl border border-amber-200 bg-white overflow-hidden shadow-sm">
         <a href="#story" class="block aspect-[4/3]">
@@ -157,12 +157,17 @@
       <option value="hachito%20mobilize.mp4">Mobilize</option>
       <option value="hachito%20wakes%20up%20ready.mp4">Wakes Up Ready</option>
       <option value="hajito%20cartoon%20running%20thruthe%20hallway%20.mp4">Hallway Run</option>
+      <!-- NEW videos -->
+      <option value="hachito_newvideo1.mp4">New Video 1</option>
+      <option value="hachito_newvideo2.mp4">New Video 2</option>
     </select>
     <button id="playSelected" class="px-4 py-2 rounded-xl bg-amber-500 text-white font-semibold shadow hover:bg-amber-600" type="button">Play Selected</button>
 
     <!-- quick buttons -->
     <button class="vbtn px-4 py-2 rounded-xl bg-amber-700 text-white font-semibold shadow hover:bg-amber-800" data-src="hachito%20dances.mp4" type="button">Dances</button>
     <button class="vbtn px-4 py-2 rounded-xl bg-amber-700 text-white font-semibold shadow hover:bg-amber-800" data-src="hacheto%20excited.mp4" type="button">Excited</button>
+    <button class="vbtn px-4 py-2 rounded-xl bg-amber-700 text-white font-semibold shadow hover:bg-amber-800" data-src="hachito_newvideo1.mp4" type="button">New Video 1</button>
+    <button class="vbtn px-4 py-2 rounded-xl bg-amber-700 text-white font-semibold shadow hover:bg-amber-800" data-src="hachito_newvideo2.mp4" type="button">New Video 2</button>
 
     <!-- YouTube button -->
     <button id="ytBtn" class="inline-flex items-center gap-2 rounded-full bg-red-600 text-white font-extrabold px-4 py-2" type="button" aria-label="Watch on YouTube">
@@ -218,15 +223,17 @@
 
 <!-- ===== Scripts ===== -->
 <script>
-  // Story pages (corrected mapping)
+  // Story pages (now 9 pages; includes your two new webp images)
   const PAGES = [
     { title:'Page 1 · Wake Up, Hacheeto!',  text:"Morning light tickled Hacheeto's whiskers. “Adventure time!” he yawned, buttoning his bright red hoodie.", img:'img3.png' },
     { title:'Page 2 · The Button Path',     text:'Big friendly buttons lined the path. Hacheeto tapped the first one—boop!—and a bluebird sang.', img:'img1.png' },
     { title:'Page 3 · Crossing the Creek',  text:'A tiny bridge wobbled. “Steady, paws,” said Hacheeto, eyes bright with courage.', img:'img6.png' },
     { title:'Page 4 · The Helpful Fox',     text:'“Need a map?” asked a fox, offering a scroll with a smile. Hacheeto bowed, “Thank you!”', img:'img2.png' },
     { title:'Page 5 · Dreaming Big',        text:'Stars winked hello. Hacheeto padded home, cocoa in paw, dreams full of tomorrow’s wonders.', img:'img4.png' },
-    { title:'Page 6 · Flying High',         text:'“I can soar!” he cried. His jacket flapped like wings as he leapt into the night sky.', img:'img8.png' },
-    { title:'Page 7 · Adventure Continues', text:'From high above, Hacheeto saw paths yet to explore. His silly jacket carried him into tomorrow.', img:'img5.png' }
+    { title:'Page 6 · Hacheeto Flying High',text:'Hacheeto spread his wings wider than ever before.', img:'hachito_img_9.webp' },  // NEW
+    { title:'Page 7 · Adventure Continues', text:'From high above, Hacheeto saw paths yet to explore. His silly jacket carried him into tomorrow.', img:'img5.png' },
+    { title:'Page 8 · Mobilize',            text:'The world called, and Hacheeto answered with brave little steps.', img:'img8.png' },
+    { title:'Page 9 · A New Horizon',       text:'Beyond the clouds, new dreams were waiting for him.', img:'hachito_img_10.webp' }  // NEW
   ];
 
   // Story elements
@@ -235,6 +242,8 @@
   const pageTitle = document.getElementById('pageTitle');
   const pageText = document.getElementById('pageText');
   const dots = document.getElementById('dots');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
 
   function drawDots(){
     dots.innerHTML = '';
@@ -251,11 +260,11 @@
     pageTitle.textContent = p.title;
     pageText.textContent = p.text;
     drawDots();
-    document.getElementById('prevBtn').disabled = (i===0);
-    document.getElementById('nextBtn').disabled = (i===PAGES.length-1);
+    prevBtn.disabled = (i===0);
+    nextBtn.disabled = (i===PAGES.length-1);
   }
-  document.getElementById('prevBtn').addEventListener('click', () => { i = Math.max(0, i-1); render(); });
-  document.getElementById('nextBtn').addEventListener('click', () => { i = Math.min(PAGES.length-1, i+1); render(); });
+  prevBtn.addEventListener('click', () => { i = Math.max(0, i-1); render(); });
+  nextBtn.addEventListener('click', () => { i = Math.min(PAGES.length-1, i+1); render(); });
   illus.onerror = function(){ this.style.background='#f7f3ec'; };
   render();
 
@@ -302,7 +311,8 @@
   });
 
   // Footer year
-  document.getElementById('year').textContent = new Date().getFullYear();
+  document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());
 </script>
 </body>
 </html>
+
