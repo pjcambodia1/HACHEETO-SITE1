@@ -5,15 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hacheeto — Preview</title>
   <meta name="description" content="Hacheeto — a cheerful pup with outsized adventures.">
-  <!-- Favicon (red paw in beige circle) -->
-  <link rel="icon" href="favicon.ico?v=2" type="image/x-icon">
-  <link rel="icon" href="favicon.png?v=2" type="image/png">
-  <link rel="apple-touch-icon" href="favicon.png?v=2">
+  <!-- Favicon (red paw) -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .radial{background:radial-gradient(1200px 600px at 50% -20%, #fef3c7, transparent);}
     .dot{width:10px;height:10px;border-radius:999px;background:#e7dccb}
     .dot.active{background:#D4A373}
+    .coin-img{
+      width:2.5cm;height:2.5cm;border-radius:9999px;object-fit:cover;
+      border:3px solid #b08968;
+      box-shadow:0 4px 12px rgba(0,0,0,.15) inset, 0 3px 10px rgba(0,0,0,.08);
+      background:#e6c98f;
+    }
   </style>
 </head>
 <body class="bg-amber-50 text-stone-800">
@@ -22,14 +29,13 @@
 <header class="sticky top-0 z-40 backdrop-blur bg-amber-50/80 border-b border-amber-200">
   <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
     <div class="flex items-center gap-2">
-      <span class="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-amber-400 shadow-sm">
-        <span class="text-2xl" aria-hidden="true">🐾</span>
-      </span>
+      <span class="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-amber-400 shadow-sm">🐾</span>
       <span class="text-xl font-bold tracking-tight">Hacheeto</span>
     </div>
     <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
       <a href="#story" class="hover:text-amber-700">Story</a>
       <a href="#gallery" class="hover:text-amber-700">Gallery</a>
+      <a href="#media" class="hover:text-amber-700">Videos</a>
       <a href="#parents" class="hover:text-amber-700">Parents</a>
       <a href="#children" class="hover:text-amber-700">Children</a>
       <a href="#ministries" class="hover:text-amber-700">Teachers &amp; Ministries</a>
@@ -45,20 +51,20 @@
       <h1 class="text-4xl md:text-5xl font-extrabold leading-tight text-stone-900">
         Meet <span class="text-amber-600">Hacheeto</span> — a cheerful pup with outsized adventures
       </h1>
-      <p class="mt-4 text-lg text-stone-700">
-        Stories and pictures the whole family can enjoy. Follow Hacheeto from cozy naps to
-        rocket rides — with kindness, courage, and a very silly jacket with tiny wings.
-      </p>
+      <p class="mt-4 text-lg text-stone-700">Stories and pictures the whole family can enjoy.</p>
       <div class="mt-6 flex flex-wrap gap-3">
         <a href="#gallery" class="px-5 py-3 rounded-2xl bg-amber-500 text-white font-semibold shadow hover:bg-amber-600">View pictures</a>
-        <a href="./Hacheeto_Big_Adventure_PrintReady.pdf" class="px-5 py-3 rounded-2xl bg-amber-700 text-white font-semibold shadow hover:bg-amber-800">
-          Read Hacheeto’s Big Adventure</a>
+        <a href="./Hacheeto_Big_Adventure_PrintReady.pdf" class="px-5 py-3 rounded-2xl bg-amber-700 text-white font-semibold shadow hover:bg-amber-800">Read Hacheeto’s Big Adventure</a>
         <a href="#subscribe" class="px-5 py-3 rounded-2xl bg-white text-amber-700 font-semibold shadow border border-amber-200 hover:bg-amber-100">Get updates</a>
+      </div>
+      <!-- Hero coin -->
+      <div class="mt-6">
+        <img class="coin-img" src="hacheeto%20coin2.png" alt="Hacheeto Approved coin">
       </div>
     </div>
     <div class="relative">
       <div class="aspect-[4/3] w-full rounded-3xl overflow-hidden border border-amber-200 shadow-inner bg-amber-100">
-        <img src="hachito.webp?v=2" alt="Hacheeto hero" class="h-full w-full object-cover">
+        <img src="hachito.webp" alt="Hacheeto hero" class="h-full w-full object-cover">
       </div>
     </div>
   </div>
@@ -70,13 +76,13 @@
     <!-- Illustration -->
     <div class="rounded-3xl border border-amber-200 bg-amber-100/60 p-6 shadow-inner">
       <div class="aspect-[4/3] w-full rounded-2xl overflow-hidden border border-amber-200">
-        <img id="illusImg" src="hachito.webp?v=2" alt="Story illustration" class="h-full w-full object-cover">
+        <img id="illusImg" src="img3.png" class="h-full w-full object-cover" alt="Story illustration">
       </div>
       <p class="mt-3 text-center text-sm text-stone-600">Tap the dots or buttons to flip pages.</p>
       <div class="mt-4 flex items-center justify-between">
-        <button id="prevBtn" type="button" class="px-4 py-2 rounded-xl bg-amber-500 text-white font-semibold shadow hover:bg-amber-600">◀ Prev</button>
+        <button id="prevBtn" class="px-4 py-2 rounded-xl bg-amber-500 text-white font-semibold shadow hover:bg-amber-600" type="button">◀ Prev</button>
         <div id="dots" class="flex items-center gap-2"></div>
-        <button id="nextBtn" type="button" class="px-4 py-2 rounded-xl bg-amber-500 text-white font-semibold shadow hover:bg-amber-600">Next ▶</button>
+        <button id="nextBtn" class="px-4 py-2 rounded-xl bg-amber-500 text-white font-semibold shadow hover:bg-amber-600" type="button">Next ▶</button>
       </div>
     </div>
     <!-- Copy -->
@@ -102,8 +108,7 @@
 <section id="gallery" class="mx-auto max-w-6xl px-4 py-12">
   <h2 class="text-2xl font-bold mb-6">Illustration Gallery</h2>
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-
-    <!-- Each card links back to Story and jumps to that page -->
+    <!-- Template used by script to mirror story pages -->
     <template id="thumbTpl">
       <figure class="group rounded-3xl border border-amber-200 bg-white overflow-hidden shadow-sm">
         <a href="#story" class="block aspect-[4/3]">
@@ -115,8 +120,16 @@
         </figcaption>
       </figure>
     </template>
-
     <div id="thumbs" class="contents"></div>
+
+    <!-- Extra Puppy card -->
+    <figure class="group rounded-3xl border border-amber-200 bg-white overflow-hidden shadow-sm">
+      <a href="#story" class="block aspect-[4/3]">
+        <img class="h-full w-full object-cover"
+             src="hacheeto%20Image%202025-09-30%20at%206.51.49%20AM.jpeg" alt="Hacheeto puppy">
+      </a>
+      <figcaption class="p-4">Hacheeto Puppy</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -126,7 +139,7 @@
 
   <!-- Player -->
   <div id="videoSlot" class="rounded-3xl border border-amber-200 bg-white p-3 shadow-sm">
-    <video id="player" controls preload="metadata" class="w-full rounded-2xl" poster="hachito.webp?v=2">
+    <video id="player" controls preload="metadata" class="w-full rounded-2xl" poster="hachito.webp">
       <source src="hachito%20dances.mp4" type="video/mp4">
     </video>
   </div>
@@ -147,11 +160,11 @@
     </select>
     <button id="playSelected" class="px-4 py-2 rounded-xl bg-amber-500 text-white font-semibold shadow hover:bg-amber-600" type="button">Play Selected</button>
 
-    <!-- a couple of handy quick buttons -->
+    <!-- quick buttons -->
     <button class="vbtn px-4 py-2 rounded-xl bg-amber-700 text-white font-semibold shadow hover:bg-amber-800" data-src="hachito%20dances.mp4" type="button">Dances</button>
     <button class="vbtn px-4 py-2 rounded-xl bg-amber-700 text-white font-semibold shadow hover:bg-amber-800" data-src="hacheto%20excited.mp4" type="button">Excited</button>
 
-    <!-- Separate YouTube button (classic look) -->
+    <!-- YouTube button -->
     <button id="ytBtn" class="inline-flex items-center gap-2 rounded-full bg-red-600 text-white font-extrabold px-4 py-2" type="button" aria-label="Watch on YouTube">
       <span class="inline-block w-0 h-0 border-l-[10px] border-l-white border-y-[7px] border-y-transparent"></span>
       Watch on YouTube
@@ -182,42 +195,46 @@
 <section id="subscribe" class="mx-auto max-w-3xl px-4 pb-12">
   <div class="rounded-3xl border border-amber-200 bg-white p-6 shadow-sm">
     <h3 class="text-xl font-bold">Get Hacheeto updates</h3>
-    <p class="mt-2 text-stone-700">New pictures, free printables, and story releases. No spam, unsubscribe anytime.</p>
-    <form action="#" class="mt-4 grid sm:grid-cols-[1fr_auto] gap-3">
-      <input type="email" placeholder="Your email" class="rounded-2xl border border-amber-300 px-4 py-3 outline-none focus:ring-2 focus:ring-amber-400"/>
-      <button class="rounded-2xl px-5 py-3 bg-amber-500 text-white font-semibold shadow hover:bg-amber-600" type="button" onclick="alert('Preview only — on live site use Formspree.')">Notify me</button>
+    <p class="mt-2 text-stone-700">
+      New pictures, free printables, and story releases. No spam, unsubscribe anytime.
+      Email: <a class="text-amber-700 underline" href="mailto:hacheeto@gmail.com">hacheeto@gmail.com</a>
+    </p>
+    <form action="mailto:hacheeto@gmail.com" method="post" enctype="text/plain"
+          class="mt-4 grid sm:grid-cols-[1fr_auto] gap-3">
+      <input name="email" type="email" placeholder="Your email"
+             class="rounded-2xl border border-amber-300 px-4 py-3 outline-none focus:ring-2 focus:ring-amber-400"/>
+      <div class="flex items-center gap-3">
+        <img class="coin-img" src="hacheeto%20coin2.png" alt="Hacheeto Approved coin">
+        <button class="rounded-2xl px-5 py-3 bg-amber-500 text-white font-semibold shadow hover:bg-amber-600" type="submit">Notify me</button>
+        <img class="coin-img" src="hacheeto%20coin2.png" alt="Hacheeto Approved coin">
+      </div>
     </form>
   </div>
 </section>
 
 <footer class="border-t border-amber-200">
-  <div class="mx-auto max-w-6xl px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-    <p class="text-sm">© <span id="year"></span> Hacheeto. All rights reserved.</p>
-    <script>document.getElementById('year').textContent = new Date().getFullYear()</script>
-  </div>
+  <div class="mx-auto max-w-6xl px-4 py-8">© <span id="year"></span> Hacheeto</div>
 </footer>
 
-<!-- ===== Scripts: Story + Gallery + Video ===== -->
+<!-- ===== Scripts ===== -->
 <script>
-  // -------- Story slider data (7 pages) --------
+  // Story pages (corrected mapping)
   const PAGES = [
-    { title:'Page 1 · Wake Up, Hacheeto!', text:"Morning light tickled Hacheeto's whiskers. “Adventure time!” he yawned, buttoning his bright red hoodie.", img:'hachito.webp?v=2' },
-    { title:'Page 2 · The Button Path',    text:'Big friendly buttons lined the path. Hacheeto tapped the first one—boop!—and a bluebird sang.', img:'img1.png?v=2' },
-    { title:'Page 3 · Crossing the Creek', text:'A tiny bridge wobbled. “Steady, paws,” said Hacheeto, eyes bright with courage.', img:'img2.png?v=2' },
-    { title:'Page 4 · The Helpful Fox',    text:'“Need a map?” asked a fox, offering a scroll with a smile. Hacheeto bowed, “Thank you!”', img:'img3.png?v=2' },
-    { title:'Page 5 · Dreaming Big',       text:'Stars winked hello. Hacheeto padded home, cocoa in paw, dreams full of tomorrow’s wonders.', img:'img4.png?v=2' },
-    { title:'Page 6 · Flying High',        text:'“I can soar!” he cried. His jacket flapped like wings as he leapt into the night sky.', img:'img5.png?v=2' },
-    { title:'Page 7 · Adventure Continues',text:'From high above, Hacheeto saw paths yet to explore. His silly jacket carried him into tomorrow.', img:'img6.png?v=2' }
+    { title:'Page 1 · Wake Up, Hacheeto!',  text:"Morning light tickled Hacheeto's whiskers. “Adventure time!” he yawned, buttoning his bright red hoodie.", img:'img3.png' },
+    { title:'Page 2 · The Button Path',     text:'Big friendly buttons lined the path. Hacheeto tapped the first one—boop!—and a bluebird sang.', img:'img1.png' },
+    { title:'Page 3 · Crossing the Creek',  text:'A tiny bridge wobbled. “Steady, paws,” said Hacheeto, eyes bright with courage.', img:'img6.png' },
+    { title:'Page 4 · The Helpful Fox',     text:'“Need a map?” asked a fox, offering a scroll with a smile. Hacheeto bowed, “Thank you!”', img:'img2.png' },
+    { title:'Page 5 · Dreaming Big',        text:'Stars winked hello. Hacheeto padded home, cocoa in paw, dreams full of tomorrow’s wonders.', img:'img4.png' },
+    { title:'Page 6 · Flying High',         text:'“I can soar!” he cried. His jacket flapped like wings as he leapt into the night sky.', img:'img8.png' },
+    { title:'Page 7 · Adventure Continues', text:'From high above, Hacheeto saw paths yet to explore. His silly jacket carried him into tomorrow.', img:'img5.png' }
   ];
 
-  // Elements for story
+  // Story elements
   let i = 0;
   const illus = document.getElementById('illusImg');
   const pageTitle = document.getElementById('pageTitle');
   const pageText = document.getElementById('pageText');
   const dots = document.getElementById('dots');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
 
   function drawDots(){
     dots.innerHTML = '';
@@ -234,15 +251,15 @@
     pageTitle.textContent = p.title;
     pageText.textContent = p.text;
     drawDots();
-    prevBtn.disabled = (i===0);
-    nextBtn.disabled = (i===PAGES.length-1);
+    document.getElementById('prevBtn').disabled = (i===0);
+    document.getElementById('nextBtn').disabled = (i===PAGES.length-1);
   }
-  prevBtn.addEventListener('click', () => { i = Math.max(0, i-1); render(); });
-  nextBtn.addEventListener('click', () => { i = Math.min(PAGES.length-1, i+1); render(); });
-  illus.onerror = function(){ this.style.background='#f7f3ec'; }; // gentle fallback
+  document.getElementById('prevBtn').addEventListener('click', () => { i = Math.max(0, i-1); render(); });
+  document.getElementById('nextBtn').addEventListener('click', () => { i = Math.min(PAGES.length-1, i+1); render(); });
+  illus.onerror = function(){ this.style.background='#f7f3ec'; };
   render();
 
-  // -------- Gallery thumbs (jump to that page in story) --------
+  // Gallery thumbs mirroring PAGES
   const thumbsWrap = document.getElementById('thumbs');
   const tpl = document.getElementById('thumbTpl');
   PAGES.forEach((p, idx) => {
@@ -250,19 +267,17 @@
     const img = node.querySelector('.thumbImg');
     const title = node.querySelector('.thumbTitle');
     const open = node.querySelector('.thumbOpen');
-    img.src = p.img;
-    img.alt = p.title;
+    img.src = p.img; img.alt = p.title;
     title.textContent = p.title.replace(/^Page \d+ ·\s*/,'Hacheeto ');
-    open.href = p.img.replace(/\?v=\d+$/,''); // open raw file
-    // clicking the image jumps story
+    open.href = p.img;
     node.querySelector('a').addEventListener('click', () => { i = idx; render(); });
     thumbsWrap.appendChild(node);
   });
 
-  // -------- Videos --------
+  // Videos
   function playMp4(src){
     const slot = document.getElementById('videoSlot');
-    slot.innerHTML = '<video controls preload="metadata" class="w-full rounded-2xl" poster="hachito.webp?v=2"><source src="'+src+'" type="video/mp4"></video>';
+    slot.innerHTML = '<video controls preload="metadata" class="w-full rounded-2xl" poster="hachito.webp"><source src="'+src+'" type="video/mp4"></video>';
   }
   document.getElementById('playSelected').addEventListener('click', () => {
     const sel = document.getElementById('videoSelect');
@@ -285,8 +300,9 @@
     const slot = document.getElementById('videoSlot');
     slot.innerHTML = '<iframe class="w-full rounded-2xl" height="360" src="https://www.youtube.com/embed/'+encodeURIComponent(id)+'" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
   });
+
+  // Footer year
+  document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
-
-
