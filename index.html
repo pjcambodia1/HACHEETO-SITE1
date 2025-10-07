@@ -213,16 +213,25 @@
       New pictures, free printables, and story releases. No spam, unsubscribe anytime.
       Email: <a class="text-amber-700 underline" href="mailto:info@hacheeto.com">info@hacheeto.com</a>
     </p>
-    <form action="mailto:info@hacheeto.com" method="post" enctype="text/plain"
+
+    <!-- ▼▼ UPDATED: working form wired to Apps Script ▼▼ -->
+    <form id="subscribe-form"
+          action="https://script.google.com/macros/s/AKfycby-Rgp770Ppv1FPxuCfdGPQbPWmWRjV2sfhJPVJJ3b93UIjAgPHFJQZfktraWi2eEdN/exec"
+          method="POST"
           class="mt-4 grid sm:grid-cols-[1fr_auto] gap-3">
-      <input name="email" type="email" placeholder="Your email"
-             class="rounded-2xl border border-amber-300 px-4 py-3 outline-none focus:ring-2 focus:ring-amber-400"/>
+      <input name="email" type="email" placeholder="Your email" required
+             class="rounded-2xl border border-amber-300 px-4 py-3 outline-none focus:ring-2 focus:ring-amber-400"
+             aria-label="Email address"/>
       <div class="flex items-center gap-3">
         <img class="coin-img" src="hacheeto%20coin2.png" alt="Hacheeto Approved coin">
         <button class="rounded-2xl px-5 py-3 bg-amber-500 text-white font-semibold shadow hover:bg-amber-600" type="submit">Notify me</button>
         <img class="coin-img" src="hacheeto%20coin2.png" alt="Hacheeto Approved coin">
       </div>
+      <input type="hidden" name="ua" id="ua-field" value="">
     </form>
+    <p id="subscribe-status" class="text-sm mt-2" style="display:none"></p>
+    <!-- ▲▲ UPDATED ▲▲ -->
+
   </div>
 </section>
 
@@ -321,8 +330,52 @@
 
   // Footer year
   document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());
+
+  /* ===== Subscribe form wiring (NEW) ===== */
+  (function () {
+    const uaField = document.getElementById('ua-field');
+    if (uaField) uaField.value = navigator.userAgent;
+
+    const form = document.getElementById('subscribe-form');
+    const status = document.getElementById('subscribe-status');
+    if (!form || !status) return;
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      status.style.display = 'block';
+      status.textContent = 'Submitting…';
+      status.className = 'text-sm mt-2 text-slate-600';
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        const json = await res.json().catch(() => ({}));
+
+        if (res.ok && (json.ok === true || Object.keys(json).length >= 0)) {
+          form.reset();
+          status.textContent = 'Thanks! You’re on the list. 🐾';
+          status.className = 'text-sm mt-2 text-green-700';
+        } else {
+          status.textContent = 'Sorry—couldn’t submit. Try again or email info@hacheeto.com.';
+          status.className = 'text-sm mt-2 text-red-700';
+        }
+      } catch (err) {
+        status.textContent = 'Network error—try again.';
+        status.className = 'text-sm mt-2 text-red-700';
+      }
+      <p class="text-xs mt-2 text-slate-500">
+  We only use your email to send Hacheeto updates. Unsubscribe anytime by replying
+  to an email or emailing <a href="mailto:info@hacheeto.com" class="underline">info@hacheeto.com</a>.
+</p>
+    });
+  })();
 </script>
 </body>
 </html>
+
+
 
 
