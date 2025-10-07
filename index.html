@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hacheeto — Preview</title>
   <meta name="description" content="Hacheeto — a cheerful pup with outsized adventures.">
-  <!-- Favicon -->
+  <!-- Favicon (red paw) -->
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="favicon.png">
@@ -131,14 +131,24 @@
       <figcaption class="p-4">Hacheeto Puppy</figcaption>
     </figure>
 
-    <!-- Real Hacheeto photo -->
-    <figure class="group rounded-3xl border border-amber-200 bg-white overflow-hidden shadow-sm">
-      <a href="#story" class="block aspect-[4/3]">
-        <img class="h-full w-full object-cover"
-             src="real_hacheeto.jpg" alt="Real Hacheeto">
-      </a>
-      <figcaption class="p-4 text-amber-700 font-bold">🐾 Real Hacheeto</figcaption>
-    </figure>
+<!-- Real Hacheeto photo -->
+<figure class="group rounded-3xl border border-amber-200 bg-white overflow-hidden shadow-sm">
+  <a href="#story" class="block aspect-[4/3]">
+    <img class="h-full w-full object-cover"
+         src="real_hacheeto.jpg" alt="Real Hacheeto">
+  </a>
+  <figcaption class="p-4 text-amber-700 font-bold">🐾 Real Hacheeto</figcaption>
+</figure>
+
+<!-- Adjacent MP4 "gif-like" video -->
+<figure class="group rounded-3xl border border-amber-200 bg-white overflow-hidden shadow-sm">
+  <video autoplay muted loop playsinline class="h-full w-full object-cover">
+    <source src="vidu-video-2981678376489994.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <figcaption class="p-4 text-amber-700 font-bold">🎬 Hacheeto in Motion</figcaption>
+</figure>
+
   </div>
 </section>
 
@@ -213,34 +223,24 @@
       New pictures, free printables, and story releases. No spam, unsubscribe anytime.
       Email: <a class="text-amber-700 underline" href="mailto:info@hacheeto.com">info@hacheeto.com</a>
     </p>
-
-    <!-- WORKING form with robust fallback -->
     <form id="subscribe-form"
           action="https://script.google.com/macros/s/AKfycbzO8d4u9bCBTt6P9fsNBMhgTXa2aVglIOINhikpbAIodTzsdjaLUk-ZceZi30lDrSrA/exec"
           method="POST"
-          target="hacheeto_iframe"
           class="mt-4 grid sm:grid-cols-[1fr_auto] gap-3">
       <input name="email" type="email" placeholder="Your email" required
-             class="rounded-2xl border border-amber-300 px-4 py-3 outline-none focus:ring-2 focus:ring-amber-400"
-             aria-label="Email address"/>
-      <!-- tiny honeypot to reduce spam -->
+             class="rounded-2xl border border-amber-300 px-4 py-3 outline-none focus:ring-2 focus:ring-amber-400" aria-label="Email address"/>
+      <!-- honeypot -->
       <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+      <!-- user agent -->
+      <input type="hidden" name="ua" id="ua-field" value="">
+      <!-- redirect back after submit -->
+      <input type="hidden" name="redirect" value="https://hacheeto.com/#subscribe">
       <div class="flex items-center gap-3">
         <img class="coin-img" src="hacheeto%20coin2.png" alt="Hacheeto Approved coin">
         <button class="rounded-2xl px-5 py-3 bg-amber-500 text-white font-semibold shadow hover:bg-amber-600" type="submit">Notify me</button>
         <img class="coin-img" src="hacheeto%20coin2.png" alt="Hacheeto Approved coin">
       </div>
-      <input type="hidden" name="ua" id="ua-field" value="">
     </form>
-    <iframe name="hacheeto_iframe" style="display:none;width:0;height:0;border:0;"></iframe>
-
-    <p id="subscribe-status" class="text-sm mt-2" style="display:none"></p>
-
-    <!-- Privacy note -->
-    <p class="mt-2 text-xs text-slate-500">
-      We store your email solely to send Hacheeto updates. Unsubscribe anytime by replying
-      to an email from <a class="underline" href="mailto:info@hacheeto.com">info@hacheeto.com</a>.
-    </p>
   </div>
 </section>
 
@@ -295,7 +295,7 @@
   illus.onerror = function(){ this.style.background='#f7f3ec'; };
   render();
 
-  // Gallery thumbs
+  // Gallery thumbs mirroring PAGES
   const thumbsWrap = document.getElementById('thumbs');
   const tpl = document.getElementById('thumbTpl');
   PAGES.forEach((p, idx) => {
@@ -340,46 +340,8 @@
   // Footer year
   document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());
 
-  /* ===== Subscribe form wiring (AJAX + hidden-iframe fallback) ===== */
-  (function () {
-    const form   = document.getElementById('subscribe-form');
-    const status = document.getElementById('subscribe-status');
-    const uaFld  = document.getElementById('ua-field');
-    if (uaFld) uaFld.value = navigator.userAgent;
-
-    function showStatus(msg, cls) {
-      status.style.display = 'block';
-      status.textContent = msg;
-      status.className = 'text-sm mt-2 ' + cls;
-    }
-
-    form.addEventListener('submit', async function (e) {
-      // Try AJAX first; if blocked by CORS/login redirect, fall back to real submit (hidden iframe).
-      e.preventDefault();
-      showStatus('Submitting…', 'text-slate-600');
-
-      try {
-        const res  = await fetch(form.action, { method: 'POST', body: new FormData(form) });
-        let json = {};
-        try { json = await res.clone().json(); } catch(_) {}
-
-        if (res.ok && (json.ok === true || Object.keys(json).length >= 0)) {
-          form.reset();
-          showStatus('Thanks! You’re on the list. 🐾', 'text-green-700');
-          return;
-        }
-
-        // Fallback: standard submit to hidden iframe (still triggers Apps Script)
-        form.submit();
-        setTimeout(() => showStatus('Submitted! Please check your inbox.', 'text-green-700'), 800);
-
-      } catch (err) {
-        // Network/CORS error → fallback submit
-        form.submit();
-        setTimeout(() => showStatus('Submitted! Please check your inbox.', 'text-green-700'), 800);
-      }
-    });
-  })();
+  // Fill UA for subscribe form
+  try{ var uaEl = document.getElementById('ua-field'); if(uaEl){ uaEl.value = navigator.userAgent; } }catch(e){}
 </script>
 </body>
 </html>
