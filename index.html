@@ -214,7 +214,7 @@
       Email: <a class="text-amber-700 underline" href="mailto:info@hacheeto.com">info@hacheeto.com</a>
     </p>
 
-    <!-- ▼▼ UPDATED: working form wired to Apps Script ▼▼ -->
+    <!-- WORKING form wired to Apps Script -->
     <form id="subscribe-form"
           action="https://script.google.com/macros/s/AKfycby-Rgp770Ppv1FPxuCfdGPQbPWmWRjV2sfhJPVJJ3b93UIjAgPHFJQZfktraWi2eEdN/exec"
           method="POST"
@@ -229,9 +229,14 @@
       </div>
       <input type="hidden" name="ua" id="ua-field" value="">
     </form>
-    <p id="subscribe-status" class="text-sm mt-2" style="display:none"></p>
-    <!-- ▲▲ UPDATED ▲▲ -->
 
+    <p id="subscribe-status" class="text-sm mt-2" style="display:none"></p>
+
+    <!-- Privacy note -->
+    <p class="mt-2 text-xs text-slate-500">
+      We store your email solely to send Hacheeto updates. Unsubscribe anytime by replying
+      to an email from <a class="underline" href="mailto:info@hacheeto.com">info@hacheeto.com</a>.
+    </p>
   </div>
 </section>
 
@@ -241,17 +246,17 @@
 
 <!-- ===== Scripts ===== -->
 <script>
-  // Story pages (now 9 pages; includes your two new webp images)
+  // Story pages (now 9 pages; includes two new .webp)
   const PAGES = [
     { title:'Page 1 · Wake Up, Hacheeto!',  text:"Morning light tickled Hacheeto's whiskers. “Adventure time!” he yawned, buttoning his bright red hoodie.", img:'img3.png' },
     { title:'Page 2 · The Button Path',     text:'Big friendly buttons lined the path. Hacheeto tapped the first one—boop!—and a bluebird sang.', img:'img1.png' },
     { title:'Page 3 · Crossing the Creek',  text:'A tiny bridge wobbled. “Steady, paws,” said Hacheeto, eyes bright with courage.', img:'img6.png' },
     { title:'Page 4 · The Helpful Fox',     text:'“Need a map?” asked a fox, offering a scroll with a smile. Hacheeto bowed, “Thank you!”', img:'img2.png' },
     { title:'Page 5 · Dreaming Big',        text:'Stars winked hello. Hacheeto padded home, cocoa in paw, dreams full of tomorrow’s wonders.', img:'img4.png' },
-    { title:'Page 6 · Hacheeto Flying High',text:'Hacheeto spread his wings wider than ever before.', img:'hachito_img_9.webp' },  // NEW
+    { title:'Page 6 · Hacheeto Flying High',text:'Hacheeto spread his wings wider than ever before.', img:'hachito_img_9.webp' },
     { title:'Page 7 · Adventure Continues', text:'From high above, Hacheeto saw paths yet to explore. His silly jacket carried him into tomorrow.', img:'img5.png' },
     { title:'Page 8 · Mobilize',            text:'The world called, and Hacheeto answered with brave little steps.', img:'img8.png' },
-    { title:'Page 9 · A New Horizon',       text:'Beyond the clouds, new dreams were waiting for him.', img:'hachito_img_10.webp' }  // NEW
+    { title:'Page 9 · A New Horizon',       text:'Beyond the clouds, new dreams were waiting for him.', img:'hachito_img_10.webp' }
   ];
 
   // Story elements
@@ -331,7 +336,7 @@
   // Footer year
   document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());
 
-  /* ===== Subscribe form wiring (NEW) ===== */
+  /* ===== Subscribe form wiring ===== */
   (function () {
     const uaField = document.getElementById('ua-field');
     if (uaField) uaField.value = navigator.userAgent;
@@ -366,10 +371,6 @@
         status.textContent = 'Network error—try again.';
         status.className = 'text-sm mt-2 text-red-700';
       }
-      <p class="text-xs mt-2 text-slate-500">
-  We only use your email to send Hacheeto updates. Unsubscribe anytime by replying
-  to an email or emailing <a href="mailto:info@hacheeto.com" class="underline">info@hacheeto.com</a>.
-</p>
     });
   })();
 </script>
