@@ -223,18 +223,33 @@
       New pictures, free printables, and story releases. No spam, unsubscribe anytime.
       Email: <a class="text-amber-700 underline" href="mailto:info@hacheeto.com">info@hacheeto.com</a>
     </p>
-    <form id="subscribe-form"
-          action="https://script.google.com/macros/s/AKfycbzO8d4u9bCBTt6P9fsNBMhgTXa2aVglIOINhikpbAIodTzsdjaLUk-ZceZi30lDrSrA/exec"
-          method="POST"
-          class="mt-4 grid sm:grid-cols-[1fr_auto] gap-3">
-      <input name="email" type="email" placeholder="Your email" required
-             class="rounded-2xl border border-amber-300 px-4 py-3 outline-none focus:ring-2 focus:ring-amber-400" aria-label="Email address"/>
-      <!-- honeypot -->
-      <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
-      <!-- user agent -->
-      <input type="hidden" name="ua" id="ua-field" value="">
-      <!-- redirect back after submit -->
-      <input type="hidden" name="redirect" value="https://hacheeto.com/#subscribe">
+
+     <form id="subscribe-form"
+      action="https://script.google.com/macros/s/AKfycbzO8d4u9bCBTt6P9fsNBMhgTXa2aVglIOINhikpbAIodTzsdjaLUk-ZceZi30lDrSrA/exec"
+      method="POST"
+      target="subscribe_iframe"
+      class="mt-5 grid sm:grid-cols-[1fr_auto] gap-3">
+  <input name="email" type="email" placeholder="Your email" required
+         class="rounded-2xl border border-amber-300 px-4 py-3 outline-none focus:ring-2 focus:ring-amber-400"
+         aria-label="Email address" />
+
+  <button type="submit"
+          class="rounded-2xl bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 font-semibold">
+    Notify me
+  </button>
+
+  <!-- Honeypot (bots fill this; humans won't see it) -->
+  <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+
+  <!-- Optional: capture user agent + redirect back -->
+  <input type="hidden" name="ua" id="ua-field" value="">
+  <input type="hidden" name="redirect" value="https://hacheeto.com/#subscribe">
+</form>
+
+<!-- Hidden target + success message -->
+<iframe name="subscribe_iframe" id="subscribe_iframe" style="display:none"></iframe>
+<p id="sub-status" class="mt-3 text-green-700 hidden">Thanks! You’re on the list.</p>
+
       <div class="flex items-center gap-3">
         <img class="coin-img" src="hacheeto%20coin2.png" alt="Hacheeto Approved coin">
         <button class="rounded-2xl px-5 py-3 bg-amber-500 text-white font-semibold shadow hover:bg-amber-600" type="submit">Notify me</button>
