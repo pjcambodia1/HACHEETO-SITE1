@@ -359,5 +359,34 @@
   try{ var uaEl = document.getElementById('ua-field'); if(uaEl){ uaEl.value = navigator.userAgent; } }catch(e){}
 </script>
 </body>
+  <script>
+(function () {
+  // Fill UA (optional)
+  try {
+    var uaEl = document.getElementById('ua-field');
+    if (uaEl) uaEl.value = navigator.userAgent;
+  } catch (e) {}
+
+  // Strip any old submit handlers by replacing the node with a clean clone
+  var oldForm = document.getElementById('subscribe-form');
+  if (oldForm) {
+    var clone = oldForm.cloneNode(true);
+    clone.action = "https://script.google.com/macros/s/AKfycbzO8d4u9bCBTt6P9fsNBMhgTXa2aVglIOINhikpbAIodTzsdjaLUk-ZceZi30lDrSrA/exec";
+    clone.method = "POST";
+    clone.target = "subscribe_iframe";
+    oldForm.replaceWith(clone);
+  }
+
+  // When Apps Script responds (iframe load), show success
+  var ifr = document.getElementById('subscribe_iframe');
+  var status = document.getElementById('sub-status');
+  if (ifr && status) {
+    ifr.addEventListener('load', function () {
+      status.classList.remove('hidden');
+    });
+  }
+})();
+</script>
+
 </html>
 
