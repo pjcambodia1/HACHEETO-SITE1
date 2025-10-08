@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hacheeto — Preview</title>
+  <meta name="description" content="Hacheeto — a cheerful pup with outsized adventures.">
+  <!-- Favicon (red paw) -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .radial{background:radial-gradient(1200px 600px at 50% -20%, #fef3c7, transparent);}
+    .dot{width:10px;height:10px;border-radius:999px;background:#e7dccb}
+    .dot.active{background:#D4A373}
+    .coin-img{
+      width:2.5cm;height:2.5cm;border-radius:9999px;object-fit:cover;
+      border:3px solid #b08968;
+      box-shadow:0 4px 12px rgba(0,0,0,.15) inset, 0 3px 10px rgba(0,0,0,.08);
+      background:#e6c98f;
+    }
+  </style>
+</head>
+<body class="bg-amber-50 text-stone-800">
+
+<!-- NAV -->
+<header class="sticky top-0 z-40 backdrop-blur bg-amber-50/80 border-b border-amber-200">
+  <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <span class="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-amber-400 shadow-sm">🐾</span>
+      <span class="text-xl font-bold tracking-tight">Hacheeto</span>
+    </div>
+    <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+      <a href="#story" class="hover:text-amber-700">Story</a>
+      <a href="#gallery" class="hover:text-amber-700">Gallery</a>
+      <a href="#media" class="hover:text-amber-700">Videos</a>
+      <a href="#parents" class="hover:text-amber-700">Parents</a>
+      <a href="#children" class="hover:text-amber-700">Children</a>
+      <a href="#ministries" class="hover:text-amber-700">Teachers &amp; Ministries</a>
+      <a href="#subscribe" class="hover:text-amber-700">Subscribe</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="relative overflow-hidden radial">
+  <div class="mx-auto max-w-6xl px-4 pt-16 pb-10 grid md:grid-cols-2 gap-10 items-center">
+    <div>
+      <h1 class="text-4xl md:text-5xl font-extrabold leading-tight text-stone-900">
+        Meet <span class="text-amber-600">Hacheeto</span> — a cheerful pup with outsized adventures
+      </h1>
+      <p class="mt-4 text-lg text-stone-700">Stories and pictures the whole family can enjoy.</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="#gallery" class="px-5 py-3 rounded-2xl bg-amber-500 text-white font-semibold shadow hover:bg-amber-600">View pictures</a>
+        <a href="./Hacheeto_Big_Adventure_PrintReady.pdf" class="px-5 py-3 rounded-2xl bg-amber-700 text-white font-semibold shadow hover:bg-amber-800">Read Hacheeto’s Big Adventure</a>
+        <a href="#subscribe" class="px-5 py-3 rounded-2xl bg-white text-amber-700 font-semibold shadow border border-amber-200 hover:bg-amber-100">Get updates</a>
+      </div>
+      <!-- Hero coin -->
+      <div class="mt-6">
+        <img class="coin-img" src="hacheeto%20coin2.png" alt="Hacheeto Approved coin">
+      </div>
+    </div>
+    <div class="relative">
+      <div class="aspect-[4/3] w-full rounded-3xl overflow-hidden border border-amber-200 shadow-inner bg-amber-100">
+        <img src="hachito.webp" alt="Hacheeto hero" class="h-full w-full object-cover">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY (slider) -->
+<section id="story" class="mx-auto max-w-6xl px-4 py-12">
+  <div class="grid md:grid-cols-2 gap-8 items-center">
+    <!-- Illustration -->
+    <div class="rounded-3xl border border-amber-200 bg-amber-100/60 p-6 shadow-inner">
+      <div class="aspect-[4/3] w-full rounded-2xl overflow-hidden border border-amber-200">
+        <img id="illusImg" src="img3.png" class="h-full w-full object-cover" alt="Story illustration">
+      </div>
+      <p class="mt-3 text-center text-sm text-stone-600">Tap the dots or buttons to flip pages.</p>
+      <div class="mt-4 flex items-center justify-between">
+        <button id="prevBtn" class="px-4 py-2 rounded-xl bg-amber-500 text-white font-semibold shadow hover:bg-amber-600" type="button">◀ Prev</button>
+        <div id="dots" class="flex items-center gap-2"></div>
+        <button id="nextBtn" class="px-4 py-2 rounded-xl bg-amber-500 text-white font-semibold shadow hover:bg-amber-600" type="button">Next ▶</button>
+      </div>
+    </div>
+    <!-- Copy -->
+    <div class="rounded-3xl border border-amber-200 bg-white p-6 shadow-sm">
+      <h2 id="pageTitle" class="text-2xl font-bold">Page 1 · Wake Up, Hacheeto!</h2>
+      <p id="pageText" class="mt-3 text-stone-700">
+        Morning light tickled Hacheeto’s whiskers. “Adventure time!” he yawned, buttoning his bright red hoodie.
+      </p>
+      <ul class="mt-4 space-y-2 text-stone-700 list-disc pl-5">
+        <li>Readable on phones and tablets</li>
+        <li>Clean language, wholesome themes</li>
+        <li>Printable activity pages coming soon</li>
+      </ul>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="./Hacheeto_Big_Adventure_PrintReady.pdf" class="px-5 py-3 rounded-2xl bg-amber-500 text-white font-semibold shadow hover:bg-amber-600">Download sample PDF</a>
+        <a href="#subscribe" class="px-5 py-3 rounded-2xl bg-white text-amber-700 font-semibold shadow border border-amber-200 hover:bg-amber-100">Get updates</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="mx-auto max-w-6xl px-4 py-12">
+  <h2 class="text-2xl font-bold mb-6">Illustration Gallery</h2>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <!-- Template (script mirrors story pages) -->
+    <template id="thumbTpl">
+      <figure class="group rounded-3xl border border-amber-200 bg-white overflow-hidden shadow-sm">
+        <a href="#story" class="block aspect-[4/3]">
+          <img class="thumbImg h-full w-full object-cover" src="" alt="">
+        </a>
+        <figcaption class="p-4 flex items-center justify-between">
+          <span class="font-medium thumbTitle">Hacheeto</span>
+          <a class="thumbOpen text-xs text-amber-700 hover:underline" href="#" target="_blank" rel="noopener">Open</a>
+        </figcaption>
+      </figure>
+    </template>
+    <div id="thumbs" class="contents"></div>
+
+    <!-- Extra Puppy card -->
+    <figure class="group rounded-3xl border border-amber-200 bg-white overflow-hidden shadow-sm">
+      <a href="#story" class="block aspect-[4/3]">
+        <img class="h-full w-full object-cover"
+             src="hacheeto%20Image%202025-09-30%20at%206.51.49%20AM.jpeg" alt="Hacheeto puppy">
+      </a>
+      <figcaption class="p-4">Hacheeto Puppy</figcaption>
+    </figure>
+
+<!-- Real Hacheeto photo -->
+<figure class="group rounded-3xl border border-amber-200 bg-white overflow-hidden shadow-sm">
+  <a href="#story" class="block aspect-[4/3]">
+    <img class="h-full w-full object-cover"
+         src="real_hacheeto.jpg" alt="Real Hacheeto">
+  </a>
+  <figcaption class="p-4 text-amber-700 font-bold">🐾 Real Hacheeto</figcaption>
+</figure>
+
+<!-- Adjacent MP4 "gif-like" video -->
+<figure class="group rounded-3xl border border-amber-200 bg-white overflow-hidden shadow-sm">
+  <video autoplay muted loop playsinline class="h-full w-full object-cover">
+    <source src="vidu-video-2981678376489994.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <figcaption class="p-4 text-amber-700 font-bold">🎬 Hacheeto in Motion</figcaption>
+</figure>
+
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="media" class="mx-auto max-w-6xl px-4 py-12">
+  <h2 class="text-2xl font-bold mb-4">Videos</h2>
+
+  <!-- Player -->
+  <div id="videoSlot" class="rounded-3xl border border-amber-200 bg-white p-3 shadow-sm">
+    <video id="player" controls preload="metadata" class="w-full rounded-2xl" poster="hachito.webp">
+      <source src="hachito%20dances.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- Controls -->
+  <div class="mt-4 flex flex-wrap items-center gap-3">
+    <select id="videoSelect" class="rounded-xl border border-amber-300 px-3 py-2 bg-white text-stone-800 font-semibold">
+      <option value="hachito%20dances.mp4">Dances (default)</option>
+      <option value="hacheeto%20gets%20wings%20his%20silly%20jacket.mp4">Gets Wings (jacket)</option>
+      <option value="hacheto%20excited.mp4">Excited</option>
+      <option value="hacheto%20gallops.mp4">Gallops</option>
+      <option value="hachito%20dreams%20and%20flies.mp4">Dreams & Flies</option>
+      <option value="hachito%20flying_851257644_source.mp4">Flying (source)</option>
+      <option value="hachito%20is%20here.mp4">Hachito is Here</option>
+      <option value="hachito%20mobilize.mp4">Mobilize</option>
+      <option value="hachito%20wakes%20up%20ready.mp4">Wakes Up Ready</option>
+      <option value="hajito%20cartoon%20running%20thruthe%20hallway%20.mp4">Hallway Run</option>
+      <!-- NEW videos -->
+      <option value="hachito_newvideo1.mp4">New Video 1</option>
+      <option value="hachito_newvideo2.mp4">New Video 2</option>
+    </select>
+    <button id="playSelected" class="px-4 py-2 rounded-xl bg-amber-500 text-white font-semibold shadow hover:bg-amber-600" type="button">Play Selected</button>
+
+    <!-- quick buttons -->
+    <button class="vbtn px-4 py-2 rounded-xl bg-amber-700 text-white font-semibold shadow hover:bg-amber-800" data-src="hachito%20dances.mp4" type="button">Dances</button>
+    <button class="vbtn px-4 py-2 rounded-xl bg-amber-700 text-white font-semibold shadow hover:bg-amber-800" data-src="hacheto%20excited.mp4" type="button">Excited</button>
+    <button class="vbtn px-4 py-2 rounded-xl bg-amber-700 text-white font-semibold shadow hover:bg-amber-800" data-src="hachito_newvideo1.mp4" type="button">New Video 1</button>
+    <button class="vbtn px-4 py-2 rounded-xl bg-amber-700 text-white font-semibold shadow hover:bg-amber-800" data-src="hachito_newvideo2.mp4" type="button">New Video 2</button>
+
+    <!-- YouTube button -->
+    <button id="ytBtn" class="inline-flex items-center gap-2 rounded-full bg-red-600 text-white font-extrabold px-4 py-2" type="button" aria-label="Watch on YouTube">
+      <span class="inline-block w-0 h-0 border-l-[10px] border-l-white border-y-[7px] border-y-transparent"></span>
+      Watch on YouTube
+    </button>
+  </div>
+</section>
+
+<!-- PARENTS / CHILDREN / MINISTRIES -->
+<section id="parents" class="mx-auto max-w-6xl px-4 py-12 grid md:grid-cols-3 gap-6">
+  <div class="rounded-3xl border border-amber-200 bg-white p-6 shadow-sm">
+    <h3 class="text-xl font-bold">For Parents</h3>
+    <p class="mt-2 text-stone-700">Gentle stories with values: kindness, courage, gratitude. Turn reading time into family time.</p>
+    <a href="#subscribe" class="inline-block mt-4 px-4 py-2 rounded-xl bg-amber-500 text-white font-semibold">Get updates</a>
+  </div>
+  <div id="children" class="rounded-3xl border border-amber-200 bg-white p-6 shadow-sm">
+    <h3 class="text-xl font-bold">For Children</h3>
+    <p class="mt-2 text-stone-700">Color, point, and tell your own version of Hacheeto’s story. Activity pages coming soon.</p>
+    <a href="./Hacheeto_Big_Adventure_PrintReady.pdf" class="inline-block mt-4 px-4 py-2 rounded-2xl bg-amber-500 text-white font-semibold">Read the story</a>
+  </div>
+  <div id="ministries" class="rounded-3xl border border-amber-200 bg-white p-6 shadow-sm">
+    <h3 class="text-xl font-bold">For Teachers &amp; Ministries</h3>
+    <p class="mt-2 text-stone-700">Use Hacheeto to spark reading, character building, and creativity in class or kids’ programs.</p>
+    <a href="#subscribe" class="inline-block mt-4 px-4 py-2 rounded-2xl bg-amber-500 text-white font-semibold">Request lesson ideas</a>
+  </div>
+</section>
+
+<!-- SUBSCRIBE -->
+<section id="subscribe" class="mx-auto max-w-3xl px-4 pb-12">
+  <div class="rounded-3xl border border-amber-200 bg-white p-6 shadow-sm">
+    <h3 class="text-xl font-bold">Get Hacheeto updates</h3>
+    <p class="mt-2 text-stone-700">
+      New pictures, free printables, and story releases. No spam, unsubscribe anytime.
+      Email: <a class="text-amber-700 underline" href="mailto:info@hacheeto.com">info@hacheeto.com</a>
+    </p>
+    <form id="subscribe-form"
+          action="https://script.google.com/macros/s/AKfycbzO8d4u9bCBTt6P9fsNBMhgTXa2aVglIOINhikpbAIodTzsdjaLUk-ZceZi30lDrSrA/exec"
+          method="POST"
+          class="mt-4 grid sm:grid-cols-[1fr_auto] gap-3">
+      <input name="email" type="email" placeholder="Your email" required
+             class="rounded-2xl border border-amber-300 px-4 py-3 outline-none focus:ring-2 focus:ring-amber-400" aria-label="Email address"/>
+      <!-- honeypot -->
+      <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+      <!-- user agent -->
+      <input type="hidden" name="ua" id="ua-field" value="">
+      <!-- redirect back after submit -->
+      <input type="hidden" name="redirect" value="https://hacheeto.com/#subscribe">
+      <div class="flex items-center gap-3">
+        <img class="coin-img" src="hacheeto%20coin2.png" alt="Hacheeto Approved coin">
+        <button class="rounded-2xl px-5 py-3 bg-amber-500 text-white font-semibold shadow hover:bg-amber-600" type="submit">Notify me</button>
+        <img class="coin-img" src="hacheeto%20coin2.png" alt="Hacheeto Approved coin">
+      </div>
+    </form>
+  </div>
+</section>
+
+<footer class="border-t border-amber-200">
+  <div class="mx-auto max-w-6xl px-4 py-8">© <span id="year"></span> Hacheeto</div>
+</footer>
+
+<!-- ===== Scripts ===== -->
+<script>
+  // Story pages
+  const PAGES = [
+    { title:'Page 1 · Wake Up, Hacheeto!',  text:"Morning light tickled Hacheeto's whiskers. “Adventure time!” he yawned, buttoning his bright red hoodie.", img:'img3.png' },
+    { title:'Page 2 · The Button Path',     text:'Big friendly buttons lined the path. Hacheeto tapped the first one—boop!—and a bluebird sang.', img:'img1.png' },
+    { title:'Page 3 · Crossing the Creek',  text:'A tiny bridge wobbled. “Steady, paws,” said Hacheeto, eyes bright with courage.', img:'img6.png' },
+    { title:'Page 4 · The Helpful Fox',     text:'“Need a map?” asked a fox, offering a scroll with a smile. Hacheeto bowed, “Thank you!”', img:'img2.png' },
+    { title:'Page 5 · Dreaming Big',        text:'Stars winked hello. Hacheeto padded home, cocoa in paw, dreams full of tomorrow’s wonders.', img:'img4.png' },
+    { title:'Page 6 · Hacheeto Flying High',text:'Hacheeto spread his wings wider than ever before.', img:'hachito_img_9.webp' },
+    { title:'Page 7 · Adventure Continues', text:'From high above, Hacheeto saw paths yet to explore. His silly jacket carried him into tomorrow.', img:'img5.png' },
+    { title:'Page 8 · Mobilize',            text:'The world called, and Hacheeto answered with brave little steps.', img:'img8.png' },
+    { title:'Page 9 · A New Horizon',       text:'Beyond the clouds, new dreams were waiting for him.', img:'hachito_img_10.webp' }
+  ];
+
+  // Story elements
+  let i = 0;
+  const illus = document.getElementById('illusImg');
+  const pageTitle = document.getElementById('pageTitle');
+  const pageText = document.getElementById('pageText');
+  const dots = document.getElementById('dots');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  function drawDots(){
+    dots.innerHTML = '';
+    PAGES.forEach((_, idx) => {
+      const d = document.createElement('div');
+      d.className = 'dot' + (idx===i ? ' active' : '');
+      d.addEventListener('click', () => { i = idx; render(); });
+      dots.appendChild(d);
+    });
+  }
+  function render(){
+    const p = PAGES[i] || PAGES[0];
+    illus.src = p.img;
+    pageTitle.textContent = p.title;
+    pageText.textContent = p.text;
+    drawDots();
+    prevBtn.disabled = (i===0);
+    nextBtn.disabled = (i===PAGES.length-1);
+  }
+  prevBtn.addEventListener('click', () => { i = Math.max(0, i-1); render(); });
+  nextBtn.addEventListener('click', () => { i = Math.min(PAGES.length-1, i+1); render(); });
+  illus.onerror = function(){ this.style.background='#f7f3ec'; };
+  render();
+
+  // Gallery thumbs mirroring PAGES
+  const thumbsWrap = document.getElementById('thumbs');
+  const tpl = document.getElementById('thumbTpl');
+  PAGES.forEach((p, idx) => {
+    const node = tpl.content.cloneNode(true);
+    const img = node.querySelector('.thumbImg');
+    const title = node.querySelector('.thumbTitle');
+    const open = node.querySelector('.thumbOpen');
+    img.src = p.img; img.alt = p.title;
+    title.textContent = p.title.replace(/^Page \d+ ·\s*/,'Hacheeto ');
+    open.href = p.img;
+    node.querySelector('a').addEventListener('click', () => { i = idx; render(); });
+    thumbsWrap.appendChild(node);
+  });
+
+  // Videos
+  function playMp4(src){
+    const slot = document.getElementById('videoSlot');
+    slot.innerHTML = '<video controls preload="metadata" class="w-full rounded-2xl" poster="hachito.webp"><source src="'+src+'" type="video/mp4"></video>';
+  }
+  document.getElementById('playSelected').addEventListener('click', () => {
+    const sel = document.getElementById('videoSelect');
+    if (sel && sel.value) playMp4(sel.value);
+  });
+  document.querySelectorAll('.vbtn').forEach(btn => {
+    btn.addEventListener('click', () => playMp4(btn.getAttribute('data-src')));
+  });
+  document.getElementById('ytBtn').addEventListener('click', () => {
+    // Replace with your real YouTube URL if you have one:
+    const yt = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+    let id = '';
+    try{
+      if(yt.includes('youtube') || yt.includes('youtu.be')){
+        id = yt.split('v=')[1] ? yt.split('v=')[1].split('&')[0] : '';
+        if(!id && yt.includes('youtu.be/')) id = yt.split('youtu.be/')[1].split(/[?&]/)[0];
+      }
+    }catch(e){}
+    if(!id) id = 'dQw4w9WgXcQ';
+    const slot = document.getElementById('videoSlot');
+    slot.innerHTML = '<iframe class="w-full rounded-2xl" height="360" src="https://www.youtube.com/embed/'+encodeURIComponent(id)+'" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+  });
+
+  // Footer year
+  document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());
+
+  // Fill UA for subscribe form
+  try{ var uaEl = document.getElementById('ua-field'); if(uaEl){ uaEl.value = navigator.userAgent; } }catch(e){}
+</script>
+</body>
+</html>
+
