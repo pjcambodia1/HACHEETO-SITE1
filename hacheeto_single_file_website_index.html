@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hacheeto — Big Adventures</title>
+  <meta name="description" content="Hacheeto — kids stories, coins, and adventures. Official site." />
+  <link rel="icon" href="/assets/paw_favicon.png" />
+  <style>
+    :root{--accent:#0b76ff;--dark:#0b1220;--muted:#6b7280}
+    *{box-sizing:border-box}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0;color:#0f1724;background:#fff}
+    a{color:var(--accent);text-decoration:none}
+    header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;border-bottom:1px solid #eef2f7}
+    .brand{display:flex;gap:12px;align-items:center}
+    .brand img{width:56px;height:56px;border-radius:10px;object-fit:cover}
+    nav{display:flex;gap:18px;align-items:center}
+    .btn{background:var(--accent);color:#fff;padding:10px 14px;border-radius:10px;border:0;cursor:pointer}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;padding:48px 28px}
+    .hero h1{font-size:36px;margin:0 0 12px}
+    .hero p{color:var(--muted);margin:0 0 18px}
+    .card{background:#f8fafc;padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(12,20,30,0.04)}
+
+    /* Gallery */
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+    .gallery img{width:100%;height:140px;object-fit:cover;border-radius:8px}
+
+    /* Videos */
+    .videos{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .video-embed{position:relative;padding-top:56.25%;background:#000;border-radius:8px;overflow:hidden}
+    .video-embed iframe{position:absolute;left:0;top:0;width:100%;height:100%}
+
+    /* Subscribe */
+    .subscribe{display:flex;gap:8px;margin-top:12px}
+    input[type="email"]{flex:1;padding:10px;border-radius:8px;border:1px solid #e6eef8}
+
+    footer{padding:24px 28px;background:#fbfdff;border-top:1px solid #eef2f7;margin-top:40px}
+
+    /* Responsive */
+    @media(max-width:900px){
+      .hero{grid-template-columns:1fr;}
+      .gallery{grid-template-columns:repeat(2,1fr)}
+      .videos{grid-template-columns:1fr}
+    }
+    @media(max-width:520px){
+      .gallery img{height:100px}
+      header{padding:12px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <img src="/assets/hacheeto_img_1.webp" alt="Hacheeto mascot" />
+      <div>
+        <strong>Hacheeto</strong>
+        <div style="font-size:12px;color:var(--muted)">Big Adventures — Kids stories &amp; collectibles</div>
+      </div>
+    </div>
+    <nav>
+      <a href="#stories">Stories</a>
+      <a href="#shop">Shop</a>
+      <a href="#media">Media</a>
+      <button class="btn" onclick="document.getElementById('subscribe').scrollIntoView({behavior:'smooth'})">Subscribe</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <h1>Hacheeto — The puppy who flies into adventures</h1>
+        <p>Storybooks, videos, and the official Hacheeto Coin (CHTO). Perfect for kids, classrooms, and collectors.</p>
+        <div class="card">
+          <h3>Latest story: "Hacheeto's Big Adventure"</h3>
+          <p style="color:var(--muted);margin:6px 0 12px">A colorful illustrated tale that takes Hacheeto from the backyard to the moon. Print-ready PDF and eBook available.</p>
+          <div style="display:flex;gap:8px">
+            <a class="btn" href="/downloads/Hacheeto_Big_Adventure_PrintReady.pdf" download>Download PDF</a>
+            <a href="#media">Watch trailer</a>
+          </div>
+        </div>
+
+        <section id="subscribe" style="margin-top:18px">
+          <h4>Get updates &amp; coin drops</h4>
+          <form id="subscribeForm" onsubmit="event.preventDefault();subscribe();" class="subscribe">
+            <input id="email" type="email" placeholder="your@email.com" required />
+            <button class="btn" type="submit">Join</button>
+          </form>
+          <small style="color:var(--muted)">We won't share your email. You can unsubscribe anytime.</small>
+        </section>
+      </div>
+
+      <aside>
+        <div class="card">
+          <img src="/assets/hacheeto_coin.png" alt="Hacheeto Coin" style="width:100%;height:200px;object-fit:contain" />
+          <h4 style="margin:10px 0 6px">Hacheeto Coin (CHTO)</h4>
+          <p style="color:var(--muted);margin:0 0 12px">Collectible token for fans. Guides on how to buy, wallets, and contract address are in the docs section.</p>
+          <a href="#shop" class="btn">Learn more</a>
+        </div>
+
+        <div style="margin-top:12px" class="card">
+          <h4>Gallery</h4>
+          <div class="gallery">
+            <img src="/assets/hacheeto_img_2.webp" alt="Hacheeto 2" />
+            <img src="/assets/hacheeto_img_3.webp" alt="Hacheeto 3" />
+            <img src="/assets/hacheeto_img_4.webp" alt="Hacheeto 4" />
+            <img src="/assets/hacheeto_img_5.webp" alt="Hacheeto 5" />
+            <img src="/assets/hacheeto_img_6.webp" alt="Hacheeto 6" />
+            <img src="/assets/hacheeto_img_7.webp" alt="Hacheeto 7" />
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="media" style="padding:28px">
+      <h2>Multimedia</h2>
+      <p style="color:var(--muted)">Trailers, read-alouds, and behind-the-scenes.</p>
+      <div class="videos">
+        <div class="video-embed">
+          <!-- Replace VIDEO_ID with real YouTube id -->
+          <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" title="Hacheeto trailer" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" title="Hacheeto read-aloud" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+    </section>
+
+    <section id="shop" style="padding:28px">
+      <h2>Shop &amp; Token</h2>
+      <p style="color:var(--muted)">Merch, coins, and downloadable assets.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a class="card" style="flex:1;min-width:220px;text-decoration:none;color:inherit" href="/shop/coin.html">
+          <img src="/assets/hacheeto_coin.png" alt="coin" style="width:100%;height:120px;object-fit:contain" />
+          <h4 style="margin:8px 0">Hacheeto Coin (CHTO)</h4>
+          <p style="color:var(--muted);margin:0">ERC-20 / Polygon token info and how to buy.</p>
+        </a>
+
+        <a class="card" style="flex:1;min-width:220px;text-decoration:none;color:inherit" href="/shop/book.html">
+          <img src="/assets/hacheeto_img_8.webp" alt="book" style="width:100%;height:120px;object-fit:cover" />
+          <h4 style="margin:8px 0">Print &amp; eBook</h4>
+          <p style="color:var(--muted);margin:0">Order the print-ready PDF or request a bulk classroom license.</p>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">
+      <div>
+        <strong>Hacheeto</strong>
+        <div style="color:var(--muted);font-size:13px">© 2025 Hacheeto — All rights reserved</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <a href="mailto:hacheeto@gmail.com">Contact</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function subscribe(){
+      var email = document.getElementById('email').value;
+      // Simple placeholder action: open mailto (replace with real back-end or Mailchimp form URL)
+      window.location.href = 'mailto:hacheeto@gmail.com?subject=Subscribe&body=' + encodeURIComponent(email);
+    }
+  </script>
+</body>
+</html>
