@@ -367,6 +367,26 @@
     if (uaEl) uaEl.value = navigator.userAgent;
   } catch (e) {}
 
+//subscribe Hacheeto Worls
+    <section style="padding:60px;text-align:center;">
+  <h2>🐾 Join Hacheeto World Club</h2>
+  <p>Exclusive adventures, virtue challenges, downloads, and CHTO rewards for only $2.50/month.</p>
+
+  <stripe-buy-button
+    buy-button-id="buy_btn_1SIERGDHOKkzOa2pim4naIlq"
+    publishable-key="pk_live_51Q3kXWDHOKkzOa2pIXxlODQODwxkduCz44tyj1lrHDxs7v7ld0ZHzcRs6YDr6YIMim398xFU9mUoiIGu4vhbDRfT00utVrv3qZ">
+  </stripe-buy-button>
+</section>
+    
+    //stripe subscribe-pay
+<!-- Stripe Buy Button embed -->
+<script async src="https://js.stripe.com/v3/buy-button.js"></script>
+
+<stripe-buy-button
+  buy-button-id="buy_btn_1SIERGDHOKkzOa2pim4naIlq"
+  publishable-key="pk_live_51Q3kXWDHOKkzOa2pIXxlODQODwxkduCz44tyj1lrHDxs7v7ld0ZHzcRs6YDr6YIMim398xFU9mUoiIGu4vhbDRfT00utVrv3qZ">
+</stripe-buy-button>
+
   // Strip any old submit handlers by replacing the node with a clean clone
   var oldForm = document.getElementById('subscribe-form');
   if (oldForm) {
