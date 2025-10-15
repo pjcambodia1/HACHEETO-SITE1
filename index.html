@@ -423,36 +423,7 @@
   publishable-key="pk_live_51Q3kXWDHOKkzOa2pIXxlODQODwxkduCz44tyj1lrHDxs7v7ld0ZHzcRs6YDr6YIMim398xFU9mUoiIGu4vhbDRfT00utVrv3qZ">
 </stripe-buy-button>
 
-  // Strip any old submit handlers by replacing the node with a clean clone
-  var oldForm = document.getElementById('subscribe-form');
-  if (oldForm) {
-    var clone = oldForm.cloneNode(true);
-    clone.action = "https://script.google.com/macros/s/AKfycbzO8d4u9bCBTt6P9fsNBMhgTXa2aVglIOINhikpbAIodTzsdjaLUk-ZceZi30lDrSrA/exec";
-    clone.method = "POST";
-    clone.target = "subscribe_iframe";
-    oldForm.replaceWith(clone);
-  }
-
-  // When Apps Script responds (iframe load), show success
-  var ifr = document.getElementById('subscribe_iframe');
-  var status = document.getElementById('sub-status');
-  if (ifr && status) {
-    ifr.addEventListener('load', function () {
-      status.classList.remove('hidden');
-    });
-  }
-})();
-<script>
-(function () {
-  var form   = document.getElementById('subscribe-form');
-  var iframe = document.getElementById('subscribe_iframe');
-  var status = document.getElementById('sub-status');
-
-  if (!form || !iframe || !status) return;
-
-  iframe.addEventListener('load', function () {
-    status.style.display = 'block';
-    form.reset();
+ 
   });
 })();
 </script>
