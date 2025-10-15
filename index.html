@@ -223,12 +223,29 @@
       New pictures, free printables, and story releases. No spam, unsubscribe anytime.
       Email: <a class="text-amber-700 underline" href="mailto:info@hacheeto.com">info@hacheeto.com</a>
     </p>
+<section id="newsletter" style="padding:32px 20px;background:#f9f9f9;">
+  <h3 style="margin:0 0 10px">Get Hacheeto updates</h3>
+  <p style="margin:0 0 16px">New pictures, free printables, and story releases. No spam. Email: info@hacheeto.com</p>
 
-     <form id="subscribe-form"
-      action="https://script.google.com/macros/s/AKfycbzO8d4u9bCBTt6P9fsNBMhgTXa2aVglIOINhikpbAIodTzsdjaLUk-ZceZi30lDrSrA/exec"
-      method="POST"
-      target="subscribe_iframe"
-      class="mt-5 grid sm:grid-cols-[1fr_auto] gap-3">
+  <form id="subscribe-form" style="display:flex;gap:8px;max-width:520px" method="POST" target="subscribe_iframe"
+        action="https://script.google.com/macros/s/AKfycbzO8d4u9bCBTt6P9fsNBMhgTXa2aVglIOINhikpbAIodTzsdjaLUk-ZceZi30lDrSrA/exec">
+    <input type="email" name="email" placeholder="Your email" required
+           style="flex:1;padding:12px;border:1px solid #ccc;border-radius:8px">
+    <button type="submit"
+            style="padding:12px 16px;border:none;border-radius:8px;background:#111;color:#fff;font-weight:700">
+      Notify me
+    </button>
+  </form>
+
+  <!-- Hidden iframe to receive Apps Script response -->
+  <iframe id="subscribe_iframe" name="subscribe_iframe" class="hidden" style="display:none"></iframe>
+
+  <p id="sub-status" class="hidden" style="display:none;margin-top:10px;color:#065f46;background:#ecfdf5;padding:8px 10px;border-radius:8px">
+    Thanks! You’re on the list. 🐾
+  </p>
+</section>
+
+     
   <input name="email" type="email" placeholder="Your email" required
          class="rounded-2xl border border-amber-300 px-4 py-3 outline-none focus:ring-2 focus:ring-amber-400"
          aria-label="Email address" />
@@ -244,11 +261,7 @@
   <!-- Optional: capture user agent + redirect back -->
   <input type="hidden" name="ua" id="ua-field" value="">
   <input type="hidden" name="redirect" value="https://hacheeto.com/#subscribe">
-</form>
 
-<!-- Hidden target + success message -->
-<iframe name="subscribe_iframe" id="subscribe_iframe" style="display:none"></iframe>
-<p id="sub-status" class="mt-3 text-green-700 hidden">Thanks! You’re on the list.</p>
 
       <div class="flex items-center gap-3">
         <img class="coin-img" src="hacheeto%20coin2.png" alt="Hacheeto Approved coin">
@@ -405,6 +418,22 @@
     });
   }
 })();
+<script>
+(function () {
+  var form   = document.getElementById('subscribe-form');
+  var iframe = document.getElementById('subscribe_iframe');
+  var status = document.getElementById('sub-status');
+
+  if (!form || !iframe || !status) return;
+
+  iframe.addEventListener('load', function () {
+    status.style.display = 'block';
+    form.reset();
+  });
+})();
+</script>
+
+  
 </script>
 
 </html>
