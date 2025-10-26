@@ -41,8 +41,6 @@
   ];
 
   let cart = [];
-
-  // Format as currency
   const fmt = x => `$${x.toFixed(2)}`;
 
   // Render products
@@ -85,7 +83,8 @@
   }
 
   // Stripe Checkout
-  const stripe = Stripe("pk_test_YOUR_PUBLISHABLE_KEY");
+  // 👇 Replace with your actual publishable key from Stripe
+  const stripe = Stripe("pk_live_51Q3kXWDHOKkzOa2pIXxlODQODwxkduCz44tyj1lrHDxs7v7ld0ZHzcRs6YDr6YIMim398xFU9mUoiIGu4vhbDRfT00utVrv3qZ");
 
   document.getElementById("checkout").onclick = async () => {
     if (!cart.length) {
