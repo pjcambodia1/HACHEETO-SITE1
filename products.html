@@ -6,25 +6,103 @@
   <title>Hacheeto World Products</title>
   <link rel="icon" href="favicon.png" type="image/png">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://js.stripe.com/v3"></script>
 </head>
 <body class="bg-amber-50 text-stone-800">
   <header class="p-4 border-b border-amber-200 bg-white">
     <a href="index.html" class="font-bold text-amber-700">← Back to Hacheeto</a>
   </header>
 
-  <main class="max-w-3xl mx-auto p-8">
+  <main class="max-w-4xl mx-auto p-8">
     <h1 class="text-3xl font-extrabold mb-4">Hacheeto World Products</h1>
     <p class="mb-6 text-stone-700">Fun and wholesome Hacheeto items for children and families.</p>
 
-    <div class="rounded-3xl bg-white p-6 shadow-sm border border-amber-200">
-      <h2 class="text-xl font-bold mb-2">Coming Soon 🛒</h2>
-      <p>Merchandise, books, and activity kits will be available here.</p>
-      <ul class="list-disc pl-6 mt-3 text-stone-700">
-        <li>Sticker packs & coloring books</li>
-        <li>T‑shirts, mugs, and journals</li>
-        <li>Digital wallpapers and collectibles</li>
-      </ul>
+    <!-- Product Grid -->
+    <div id="products" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+
+    <!-- Cart -->
+    <div class="mt-10 p-6 bg-white border rounded-3xl shadow">
+      <h2 class="text-xl font-bold mb-4">🛒 Your Cart</h2>
+      <ul id="cart-list" class="mb-4 text-stone-700"></ul>
+      <p class="font-semibold">Total: <span id="cart-total">$0.00</span></p>
+      <button id="checkout" class="mt-4 bg-amber-600 text-white px-4 py-2 rounded-xl hover:bg-amber-700">Checkout</button>
     </div>
   </main>
+
+  <script>
+  const PRODUCTS = [
+    { id:'polo',    name:'Hacheeto Polo', price:39, img:'assets/polo.png' },
+    { id:'tee',     name:'Hacheeto Club Tee', price:29, img:'assets/tee.png' },
+    { id:'chancla', name:'Hacheeto Flip-Flops', price:22, img:'assets/chancla.png' },
+    { id:'badge',   name:'Hacheeto Badge', price:8, img:'assets/badge.png' },
+    { id:'cap',     name:'Hacheeto Baseball Cap', price:24, img:'assets/cap.png' },
+    { id:'handbag', name:'Hacheeto Handbag', price:59, img:'assets/handbag.png' },
+    { id:'purse',   name:'Hacheeto Purse', price:39, img:'assets/purse.png' },
+  ];
+
+  let cart = [];
+
+  // Format as currency
+  const fmt = x => `$${x.toFixed(2)}`;
+
+  // Render products
+  const grid = document.getElementById('products');
+  PRODUCTS.forEach(p => {
+    const div = document.createElement('div');
+    div.className = "border rounded-2xl p-4 bg-white shadow-sm";
+    div.innerHTML = `
+      <img src="${p.img}" alt="${p.name}" class="h-32 mx-auto mb-3">
+      <h3 class="font-bold">${p.name}</h3>
+      <p class="text-amber-700 font-semibold mb-2">${fmt(p.price)}</p>
+      <button class="bg-amber-600 text-white px-3 py-1 rounded hover:bg-amber-700" onclick="addToCart('${p.id}')">Add to Cart</button>
+    `;
+    grid.appendChild(div);
+  });
+
+  function addToCart(id) {
+    const item = cart.find(i => i.id === id);
+    if (item) {
+      item.qty++;
+    } else {
+      cart.push({ id, qty: 1 });
+    }
+    renderCart();
+  }
+
+  function renderCart() {
+    const list = document.getElementById('cart-list');
+    const total = document.getElementById('cart-total');
+    list.innerHTML = "";
+    let sum = 0;
+    cart.forEach(i => {
+      const p = PRODUCTS.find(x => x.id === i.id);
+      sum += p.price * i.qty;
+      const li = document.createElement('li');
+      li.textContent = `${p.name} x${i.qty} – ${fmt(p.price * i.qty)}`;
+      list.appendChild(li);
+    });
+    total.textContent = fmt(sum);
+  }
+
+  // Stripe Checkout
+  const stripe = Stripe("pk_test_YOUR_PUBLISHABLE_KEY");
+
+  document.getElementById("checkout").onclick = async () => {
+    if (!cart.length) {
+      alert("Your cart is empty.");
+      return;
+    }
+
+    const res = await fetch("/api/create-checkout-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(cart)
+    });
+
+    const session = await res.json();
+    const { error } = await stripe.redirectToCheckout({ sessionId: session.id });
+    if (error) alert(error.message);
+  };
+  </script>
 </body>
 </html>
