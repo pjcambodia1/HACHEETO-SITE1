@@ -105,7 +105,7 @@ export default async function handler(req, res) {
 
       // 1) Send to you (internal notification)
       await sendEmail({
-        to: "hacheeto@gmail.com",
+        to: ["info@hacheeto.com", "parisd@hacheeto.com"]
         subject: "✅ Hacheeto Store — Payment received",
         html
       });
