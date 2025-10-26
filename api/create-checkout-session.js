@@ -13,13 +13,16 @@ export default async function handler(req, res) {
     const cart = req.body || [];
 
     // 🔗 Replace "price_xxx" with your real Stripe Price IDs
-    const PRICE_ID_LOOKUP = {
-      polo:    "price_xxx_polo",     // Hacheeto Polo
-      tee:     "price_xxx_tee",      // Hacheeto Tee
-      chancla: "price_xxx_chancla",  // Hacheeto Flip-Flops
-      badge:   "price_xxx_badge",    // Hacheeto Badge
-      cap:     "price_xxx_cap",      // Hacheeto Baseball Cap
-    };
+ const PRICE_ID_LOOKUP = {
+  polo:    "price_1SMLAkDHOKkzOa2p6r42FbEY", // Hacheeto Polo ($39)
+  tee:     "price_1SML6PDHOKkzOa2piiFPU3rz", // Hacheeto “Club” Tee Shirt ($29)
+  chancla: "price_1SML1fDHOKkzOa2pBm2wCVL1", // Hacheeto Flip-Flops ($22)
+  badge:   "price_1SML0gDHOKkzOa2pdXaUN0bO", // Hacheeto Badge ($8)
+  cap:     "price_1SMKvxDHOKkzOa2ppXOVZnY2", // Hacheeto Baseball Cap ($24)
+  handbag: "price_1SMKssDHOKkzOa2pfNsnt0Gn", // Hacheeto Handbag ($59)
+  purse:   "price_1SMKn9DHOKkzOa2pABVNvLaB", // Hacheeto Purse ($39)
+};
+
 
     const line_items = cart
       .filter(i => PRICE_ID_LOOKUP[i.id])
