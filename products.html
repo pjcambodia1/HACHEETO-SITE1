@@ -81,7 +81,69 @@
     });
     total.textContent = fmt(sum);
   }
+<!-- ========== COFFEE MUGS (Hacheeto Club) ========== -->
+<section id="coffee-mugs" class="store-section">
+  <h2>Hacheeto Club Coffee Mugs</h2>
+  <div class="product-grid">
 
+    <!-- White Mug -->
+    <article class="product-card">
+      <img
+        src="assets/mugs/hacheeto_mug_white.png"
+        alt="Official Hacheeto Club white coffee mug"
+        class="product-img"
+        loading="lazy"
+      />
+      <h3>Hacheeto Club Mug — White</h3>
+      <p class="price">$25.00</p>
+
+      <!-- Stripe Buy Button (WHITE) -->
+      <stripe-buy-button
+        buy-button-id="REPLACE_WITH_YOUR_WHITE_MUG_BUTTON_ID"
+        publishable-key="REPLACE_WITH_YOUR_PUBLISHABLE_KEY">
+      </stripe-buy-button>
+    </article>
+
+    <!-- Black Mug -->
+    <article class="product-card">
+      <img
+        src="assets/mugs/hacheeto_mug_black.png"
+        alt="Official Hacheeto Club black coffee mug"
+        class="product-img"
+        loading="lazy"
+      />
+      <h3>Hacheeto Club Mug — Black</h3>
+      <p class="price">$25.00</p>
+
+      <!-- Stripe Buy Button (BLACK) -->
+      <stripe-buy-button
+        buy-button-id="REPLACE_WITH_YOUR_BLACK_MUG_BUTTON_ID"
+        publishable-key="REPLACE_WITH_YOUR_PUBLISHABLE_KEY">
+      </stripe-buy-button>
+    </article>
+
+  </div>
+</section>
+
+<!-- Include ONCE per page (skip if already present) -->
+<script async src="https://js.stripe.com/v3/buy-button.js"></script>
+
+<!-- Optional lightweight styling -->
+<style>
+  .store-section { padding: 2rem 1rem; }
+  .store-section h2 { margin-bottom: 1rem; }
+  .product-grid {
+    display: grid; gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+  .product-card {
+    border: 1px solid #e6e6e6; border-radius: 14px; padding: 1rem;
+    background: #fff; text-align: center;
+  }
+  .product-img { width: 100%; height: auto; border-radius: 10px; }
+  .price { font-weight: 700; margin: 0.5rem 0 1rem; }
+</style>
+}
   // Stripe Checkout
   // 👇 Replace with your actual publishable key from Stripe
   const stripe = Stripe("pk_live_51Q3kXWDHOKkzOa2pIXxlODQODwxkduCz44tyj1lrHDxs7v7ld0ZHzcRs6YDr6YIMim398xFU9mUoiIGu4vhbDRfT00utVrv3qZ");
