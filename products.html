@@ -31,13 +31,15 @@
 
   <script>
   const PRODUCTS = [
-    { id:'polo',    name:'Hacheeto Polo', price:39, img:'assets/hacheeto polo_shirt.png' },
+    { id:'polo',    name:'Hacheeto Polo', price:39, img:'assets/hacheeto_polo_shirt.png' },
     { id:'tee',     name:'Hacheeto Club Tee', price:29, img:'assets/tee.png' },
     { id:'chancla', name:'Hacheeto Flip-Flops', price:22, img:'assets/chancla.png' },
     { id:'badge',   name:'Hacheeto Badge', price:8, img:'assets/badge.png' },
     { id:'cap',     name:'Hacheeto Baseball Cap', price:24, img:'assets/hacheeto_cap.png' },
     { id:'handbag', name:'Hacheeto Handbag', price:59, img:'assets/handbag.png' },
     { id:'purse',   name:'Hacheeto Purse', price:39, img:'assets/purse.png' },
+    { id:'mug_white', name:'Hacheeto Club Mug — White', price:25, img:'assets/mugs/hacheeto_mug_white.png' },
+    { id:'mug_black', name:'Hacheeto Club Mug — Black', price:25, img:'assets/mugs/hacheeto_mug_black.png' },
   ];
 
   let cart = [];
@@ -53,7 +55,8 @@
       <h3 class="font-bold">${p.name}</h3>
       <p class="text-amber-700 font-semibold mb-2">${fmt(p.price)}</p>
       <button class="bg-amber-600 text-white px-3 py-1 rounded hover:bg-amber-700" onclick="addToCart('${p.id}')">Add to Cart</button>
-    `;  grid.appendCh 
+    `;
+    grid.appendChild(div);
   });
 
   function addToCart(id) {
@@ -82,7 +85,6 @@
   }
 
   // Stripe Checkout
-  // 👇 Replace with your actual publishable key from Stripe
   const stripe = Stripe("pk_live_51Q3kXWDHOKkzOa2pIXxlODQODwxkduCz44tyj1lrHDxs7v7ld0ZHzcRs6YDr6YIMim398xFU9mUoiIGu4vhbDRfT00utVrv3qZ");
 
   document.getElementById("checkout").onclick = async () => {
@@ -104,3 +106,4 @@
   </script>
 </body>
 </html>
+
