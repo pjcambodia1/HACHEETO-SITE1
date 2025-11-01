@@ -24,8 +24,8 @@ export default async function handler(req, res) {
       handbag: "price_1SMKssDHOKkzOa2pfNsnt0Gn",
       purse:   "price_1SMKn9DHOKkzOa2pABVNvLaB",
       // add mugs if Buy Now used on mugs:
-      // mug_white: "price_live_XXXX",
-      // mug_black: "price_live_YYYY"
+      mug_white: "price_1SOYwjDHOKkzOa2pKNDCHMmW",
+      mug_black: "price_1SOYxmDHOKkzOa2p6kzeX1SQ"
     };
 
     const line_items = cart
