@@ -71,7 +71,7 @@
   // IMPORTANT: The server must map each id -> Stripe Price ID and amount.
   // Avoid spaces in file names. Use hyphens/underscores only.
   const PRODUCTS = [
-    { id:'polo',    name:'Hacheeto Polo',           price:39, img:'/assets/hacheeto polo_shirt.png' },
+    { id:'polo',    name:'Hacheeto Polo',           price:39, img:'/assets/hacheeto_polo_shirt.png' },
     { id:'tee',     name:'Hacheeto Club Tee',       price:29, img:'/assets/tee.png' },
     { id:'chancla', name:'Hacheeto Flip-Flops',     price:22, img:'/assets/chancla.png' },
     { id:'badge',   name:'Hacheeto Badge',          price: 8, img:'/assets/badge.png' },
@@ -171,7 +171,7 @@
     // NEVER send prices; send only ids/qty. Server maps to Stripe Price IDs.
     const res = await fetch('/api/create-checkout-session',{
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ items: cart })
+      body: JSON.stringify(cart)
     });
     if(!res.ok){
       const t = await res.text();
@@ -191,5 +191,4 @@
   </script>
 </body>
 </html>
-
 
