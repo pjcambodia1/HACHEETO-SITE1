@@ -4,106 +4,192 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hacheeto World Products</title>
-  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="icon" href="/favicon.png" type="image/png">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://js.stripe.com/v3"></script>
+  <meta name="description" content="Fun and wholesome Hacheeto items for children and families. Secure Stripe checkout. Amazon items pending approval." />
+  <style>
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:.5rem 1rem;border-radius:.75rem;font-weight:600}
+    .card{background:#fff;border:1px solid #f7dba7;border-radius:1.25rem;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+    .skeleton{background:linear-gradient(90deg,#eee 25%,#f5f5f5 37%,#eee 63%);background-size:400% 100%;animation:skeleton 1.4s ease infinite}
+    @keyframes skeleton{0%{background-position:100% 50%}100%{background-position:0 50%}}
+  </style>
 </head>
 <body class="bg-amber-50 text-stone-800">
-  <header class="p-4 border-b border-amber-200 bg-white">
-    <a href="index.html" class="font-bold text-amber-700">← Back to Hacheeto</a>
+  <header class="p-4 border-b border-amber-200 bg-white sticky top-0 z-10">
+    <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
+      <a href="/index.html" class="font-bold text-amber-700">← Back to Hacheeto</a>
+      <p class="text-xs text-stone-500">Amazon merch is pending approval. Direct checkout works today.</p>
+    </div>
   </header>
 
-  <main class="max-w-4xl mx-auto p-8">
-    <h1 class="text-3xl font-extrabold mb-4">Hacheeto World Products</h1>
+  <main class="max-w-6xl mx-auto p-6">
+    <h1 class="text-3xl font-extrabold mb-2">Hacheeto World Products</h1>
     <p class="mb-6 text-stone-700">Fun and wholesome Hacheeto items for children and families.</p>
 
     <!-- Product Grid -->
-    <div id="products" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+    <div id="products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
     <!-- Cart -->
-    <div class="mt-10 p-6 bg-white border rounded-3xl shadow">
-      <h2 class="text-xl font-bold mb-4">🛒 Your Cart</h2>
-      <ul id="cart-list" class="mb-4 text-stone-700"></ul>
-      <p class="font-semibold">Total: <span id="cart-total">$0.00</span></p>
-      <button id="checkout" class="mt-4 bg-amber-600 text-white px-4 py-2 rounded-xl hover:bg-amber-700">Checkout</button>
-    </div>
+    <section class="mt-10 card p-6">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-bold">🛒 Your Cart</h2>
+        <span id="cart-count" class="text-sm text-stone-500">0 items</span>
+      </div>
+      <ul id="cart-list" class="mb-4 text-stone-700 divide-y"></ul>
+      <div class="flex items-center justify-between">
+        <p class="font-semibold">Total: <span id="cart-total">$0.00</span></p>
+        <button id="checkout" class="btn bg-amber-600 text-white hover:bg-amber-700 disabled:opacity-60 disabled:cursor-not-allowed">Checkout</button>
+      </div>
+      <p class="mt-2 text-xs text-stone-500">Taxes/shipping (if any) shown at Stripe checkout.</p>
+    </section>
+
+    <!-- Amazon pending tiles (disabled) -->
+    <section class="mt-10">
+      <h3 class="text-lg font-bold mb-3">📦 Amazon Merch (Pending)</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <article class="card p-4">
+          <div class="flex items-center gap-2 mb-2"><span class="px-2 py-0.5 text-xs rounded-full bg-amber-100 text-amber-800 border">Pending</span><span class="text-xs text-stone-500">Awaiting Amazon approval</span></div>
+          <img src="/assets/hacheeto_mug_white.png" alt="Hacheeto Coffee Mug" class="h-40 w-full object-contain mb-3" loading="lazy"/>
+          <h4 class="font-semibold">Hacheeto Coffee Mug</h4>
+          <button class="btn bg-stone-200 text-stone-500 cursor-not-allowed w-full mt-2" disabled>Buy on Amazon (Soon)</button>
+        </article>
+        <article class="card p-4">
+          <div class="flex items-center gap-2 mb-2"><span class="px-2 py-0.5 text-xs rounded-full bg-amber-100 text-amber-800 border">Pending</span><span class="text-xs text-stone-500">Awaiting Amazon approval</span></div>
+          <img src="/assets/handbag.png" alt="Hacheeto Tote / Handbag" class="h-40 w-full object-contain mb-3" loading="lazy"/>
+          <h4 class="font-semibold">Hacheeto Tote / Handbag</h4>
+          <button class="btn bg-stone-200 text-stone-500 cursor-not-allowed w-full mt-2" disabled>Buy on Amazon (Soon)</button>
+        </article>
+      </div>
+    </section>
   </main>
 
+  <footer class="max-w-6xl mx-auto p-6 text-center text-sm text-stone-500">© <span id="year"></span> Hacheeto. All rights reserved.</footer>
+
   <script>
+  // ----------- Data (never trust client prices for Stripe!) ------------
+  // IMPORTANT: The server must map each id -> Stripe Price ID and amount.
+  // Avoid spaces in file names. Use hyphens/underscores only.
   const PRODUCTS = [
-    { id:'polo',    name:'Hacheeto Polo', price:39, img:'assets/hacheeto polo_shirt.png' },
-    { id:'tee',     name:'Hacheeto Club Tee', price:29, img:'assets/tee.png' },
-    { id:'chancla', name:'Hacheeto Flip-Flops', price:22, img:'assets/chancla.png' },
-    { id:'badge',   name:'Hacheeto Badge', price:8, img:'assets/badge.png' },
-    { id:'cap',     name:'Hacheeto Baseball Cap', price:24, img:'assets/hacheeto_cap.png' },
-    { id:'handbag', name:'Hacheeto Handbag', price:59, img:'assets/handbag.png' },
-    { id:'purse',   name:'Hacheeto Purse', price:39, img:'assets/purse.png' },
-    { id:'mug_white', name:'Hacheeto Club Mug — White', price:25, img:'assets/hacheeto_mug_white.png' },
-    { id:'mug_black', name:'Hacheeto Club Mug — Black', price:25, img:'assets/hacheeto_mug_black.png' },
+    { id:'polo',    name:'Hacheeto Polo',           price:39, img:'/assets/hacheeto_polo_shirt.png' },
+    { id:'tee',     name:'Hacheeto Club Tee',       price:29, img:'/assets/tee.png' },
+    { id:'chancla', name:'Hacheeto Flip-Flops',     price:22, img:'/assets/chancla.png' },
+    { id:'badge',   name:'Hacheeto Badge',          price: 8, img:'/assets/badge.png' },
+    { id:'cap',     name:'Hacheeto Baseball Cap',   price:24, img:'/assets/hacheeto_cap.png' },
+    { id:'handbag', name:'Hacheeto Handbag',        price:59, img:'/assets/handbag.png' },
+    { id:'purse',   name:'Hacheeto Purse',          price:39, img:'/assets/purse.png' },
+    { id:'mug_white', name:'Hacheeto Club Mug — White', price:25, img:'/assets/hacheeto_mug_white.png' },
+    { id:'mug_black', name:'Hacheeto Club Mug — Black', price:25, img:'/assets/hacheeto_mug_black.png' },
   ];
 
-  let cart = [];
-  const fmt = x => `$${x.toFixed(2)}`;
+  const CURRENCY = 'USD';
+  const money = new Intl.NumberFormat(undefined,{style:'currency',currency:CURRENCY,minimumFractionDigits:2});
 
-  // Render products
+  // -------------- Cart with localStorage persistence -------------------
+  let cart = JSON.parse(localStorage.getItem('hacheeto_cart')||'[]');
+  const saveCart = () => localStorage.setItem('hacheeto_cart', JSON.stringify(cart));
+
+  // Render products grid
   const grid = document.getElementById('products');
   PRODUCTS.forEach(p => {
-    const div = document.createElement('div');
-    div.className = "border rounded-2xl p-4 bg-white shadow-sm";
-    div.innerHTML = `
-      <img src="${p.img}" alt="${p.name}" class="h-32 mx-auto mb-3">
+    const card = document.createElement('article');
+    card.className = 'card p-4 flex flex-col';
+    card.innerHTML = `
+      <img src="${p.img}" alt="${p.name}" class="h-40 w-full object-contain mb-3" loading="lazy"/>
       <h3 class="font-bold">${p.name}</h3>
-      <p class="text-amber-700 font-semibold mb-2">${fmt(p.price)}</p>
-      <button class="bg-amber-600 text-white px-3 py-1 rounded hover:bg-amber-700" onclick="addToCart('${p.id}')">Add to Cart</button>
-    `;
-    grid.appendChild(div);
+      <p class="text-amber-700 font-semibold mb-3">${money.format(p.price)}</p>
+      <div class="mt-auto flex gap-2">
+        <button class="btn bg-amber-600 text-white hover:bg-amber-700" data-add="${p.id}">Add</button>
+        <button class="btn bg-stone-200 text-stone-700 hover:bg-stone-300" data-buy="${p.id}">Buy Now</button>
+      </div>`;
+    grid.appendChild(card);
   });
 
-  function addToCart(id) {
-    const item = cart.find(i => i.id === id);
-    if (item) {
-      item.qty++;
-    } else {
-      cart.push({ id, qty: 1 });
-    }
+  grid.addEventListener('click', (e)=>{
+    const addId = e.target.getAttribute('data-add');
+    const buyId = e.target.getAttribute('data-buy');
+    if(addId){ addToCart(addId); }
+    if(buyId){ cart = [{id:buyId, qty:1}]; saveCart(); renderCart(); startCheckout(); }
+  });
+
+  function addToCart(id){
+    const item = cart.find(i=>i.id===id);
+    if(item) item.qty++; else cart.push({id, qty:1});
+    saveCart();
     renderCart();
   }
 
-  function renderCart() {
-    const list = document.getElementById('cart-list');
-    const total = document.getElementById('cart-total');
-    list.innerHTML = "";
-    let sum = 0;
-    cart.forEach(i => {
-      const p = PRODUCTS.find(x => x.id === i.id);
-      sum += p.price * i.qty;
-      const li = document.createElement('li');
-      li.textContent = `${p.name} x${i.qty} – ${fmt(p.price * i.qty)}`;
-      list.appendChild(li);
-    });
-    total.textContent = fmt(sum);
+  function changeQty(id, delta){
+    const item = cart.find(i=>i.id===id);
+    if(!item) return;
+    item.qty += delta;
+    if(item.qty<=0) cart = cart.filter(i=>i.id!==id);
+    saveCart();
+    renderCart();
   }
 
-  // Stripe Checkout
-  const stripe = Stripe("pk_live_51Q3kXWDHOKkzOa2pIXxlODQODwxkduCz44tyj1lrHDxs7v7ld0ZHzcRs6YDr6YIMim398xFU9mUoiIGu4vhbDRfT00utVrv3qZ");
+  function renderCart(){
+    const list = document.getElementById('cart-list');
+    const total = document.getElementById('cart-total');
+    const count = document.getElementById('cart-count');
+    list.innerHTML = '';
+    let items = 0, sum = 0;
+    cart.forEach(i=>{
+      const p = PRODUCTS.find(x=>x.id===i.id);
+      if(!p) return;
+      items += i.qty; sum += p.price * i.qty;
+      const li = document.createElement('li');
+      li.className = 'py-2 flex items-center gap-3';
+      li.innerHTML = `
+        <img src="${p.img}" alt="" class="h-10 w-10 object-contain rounded"/>
+        <span class="flex-1">${p.name}</span>
+        <div class="flex items-center gap-2">
+          <button class="btn bg-stone-200" data-dec="${i.id}">−</button>
+          <span class="w-6 text-center">${i.qty}</span>
+          <button class="btn bg-stone-200" data-inc="${i.id}">+</button>
+        </div>
+        <span class="w-24 text-right">${money.format(p.price * i.qty)}</span>`;
+      list.appendChild(li);
+    });
+    count.textContent = `${items} item${items!==1?'s':''}`;
+    total.textContent = money.format(sum);
+    document.getElementById('checkout').disabled = cart.length===0;
+  }
 
-  document.getElementById("checkout").onclick = async () => {
-    if (!cart.length) {
-      alert("Your cart is empty.");
+  document.getElementById('cart-list').addEventListener('click', (e)=>{
+    const dec = e.target.getAttribute('data-dec');
+    const inc = e.target.getAttribute('data-inc');
+    if(dec) changeQty(dec,-1);
+    if(inc) changeQty(inc, 1);
+  });
+
+  // Stripe (publishable key placeholder)
+  const stripe = Stripe('pk_live_REPLACE_ME');
+
+  async function startCheckout(){
+    if(!cart.length){ alert('Your cart is empty.'); return; }
+    // NEVER send prices; send only ids/qty. Server maps to Stripe Price IDs.
+    const res = await fetch('/api/create-checkout-session',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ items: cart })
+    });
+    if(!res.ok){
+      const t = await res.text();
+      alert('Checkout error: '+t);
       return;
     }
-
-    const res = await fetch("/api/create-checkout-session", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(cart)
-    });
-
     const session = await res.json();
     const { error } = await stripe.redirectToCheckout({ sessionId: session.id });
-    if (error) alert(error.message);
-  };
+    if(error) alert(error.message);
+  }
+
+  document.getElementById('checkout').addEventListener('click', ()=> startCheckout());
+
+  // Mount year and cart
+  document.getElementById('year').textContent = new Date().getFullYear();
+  renderCart();
   </script>
 </body>
 </html>
+
 
