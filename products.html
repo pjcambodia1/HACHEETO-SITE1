@@ -106,10 +106,10 @@
   });
 
   grid.addEventListener('click', (e)=>{
-    const addId = e.target.getAttribute('data-add');
-    const buyId = e.target.getAttribute('data-buy');
-    if(addId){ addToCart(addId); }
-    if(buyId){ cart = [{id:buyId, qty:1}]; saveCart(); renderCart(); startCheckout(); }
+    const addBtn = e.target.closest('[data-add]');
+    const buyBtn = e.target.closest('[data-buy]');
+    if(addBtn){ addToCart(addBtn.getAttribute('data-add')); }
+    if(buyBtn){ cart = [{id: buyBtn.getAttribute('data-buy'), qty: 1}]; saveCart(); renderCart(); startCheckout(); }
   });
 
   function addToCart(id){
@@ -167,20 +167,25 @@
   const stripe = Stripe('pk_live_REPLACE_ME');
 
   async function startCheckout(){
-    if(!cart.length){ alert('Your cart is empty.'); return; }
-    // NEVER send prices; send only ids/qty. Server maps to Stripe Price IDs.
-    const res = await fetch('/api/create-checkout-session',{
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify(cart)
-    });
-    if(!res.ok){
-      const t = await res.text();
-      alert('Checkout error: '+t);
-      return;
+    try{
+      if(!cart.length){ alert('Your cart is empty.'); return; }
+      const res = await fetch('/api/create-checkout-session',{
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(cart)
+      });
+      const text = await res.text();
+      if(!res.ok){
+        console.error('Server error:', text);
+        alert('Checkout error: '+ text);
+        return;
+      }
+      const session = JSON.parse(text);
+      const { error } = await stripe.redirectToCheckout({ sessionId: session.id });
+      if(error) alert(error.message);
+    }catch(err){
+      console.error(err);
+      alert('Checkout failed: '+ (err?.message||err));
     }
-    const session = await res.json();
-    const { error } = await stripe.redirectToCheckout({ sessionId: session.id });
-    if(error) alert(error.message);
   }
 
   document.getElementById('checkout').addEventListener('click', ()=> startCheckout());
