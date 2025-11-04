@@ -1,10 +1,10 @@
-// api/stripe-webhook.js
+// /api/stripe-webhook.js
 import Stripe from "stripe";
 
-// Vercel must receive the raw body for signature verification
+// Stripe needs the raw body for signature verification
 export const config = { api: { bodyParser: false } };
 
-// tiny helper to read the raw request body
+// read raw request body
 async function readRawBody(req) {
   return await new Promise((resolve, reject) => {
     const chunks = [];
@@ -14,27 +14,38 @@ async function readRawBody(req) {
   });
 }
 
-// optional: send email via Resend API (no extra package needed)
+// optional email via Resend (no extra package required on Vercel)
 async function sendEmail({ to, subject, html }) {
-  const key = process.env.RESEND_API_KEY; // add in Vercel → Env Vars
-  if (!key) return; // silently skip if not configured
-  await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${key}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      from: "Hacheeto Store <orders@hacheeto.com>", // use your verified domain in Resend
-      to: Array.isArray(to) ? to : [to],
-      subject,
-      html
-    })
-  });
+  try {
+    const key = process.env.RESEND_API_KEY; // set in Vercel if you want emails
+    if (!key) return; // silently skip if not configured
+
+    // Vercel runtimes have fetch. Use a simple POST.
+    const resp = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${key}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        from: "Hacheeto Store <orders@hacheeto.com>", // must be verified in Resend
+        to: Array.isArray(to) ? to : [to],
+        subject,
+        html
+      })
+    });
+
+    // don't throw if email fails; log only
+    if (!resp.ok) {
+      const txt = await resp.text().catch(() => "");
+      console.warn("Resend email non-200:", resp.status, txt);
+    }
+  } catch (e) {
+    console.warn("Resend email error:", e?.message || e);
+  }
 }
 
 export default async function handler(req, res) {
-  // Only POST from Stripe
   if (req.method !== "POST") return res.status(405).send("Method not allowed");
 
   try {
@@ -42,26 +53,23 @@ export default async function handler(req, res) {
     const raw = await readRawBody(req);
     const sig = req.headers["stripe-signature"];
 
-    // Verify event using your webhook signing secret
     const event = stripe.webhooks.constructEvent(
       raw,
       sig,
       process.env.STRIPE_WEBHOOK_SECRET
     );
 
-    // We care about successful checkout
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
 
-      // Get line items with product info
+      // expand line items + customer details so email shows real names
       const full = await stripe.checkout.sessions.retrieve(session.id, {
-        expand: ["line_items.data.price.product", "customer_details"]
+        expand: ["line_items.data.price.product", "customer_details", "shipping_details"]
       });
 
       const items = full.line_items?.data ?? [];
       const lines = items.map((it) => {
-        const name =
-          it.price?.product?.name || it.description || "Item";
+        const name = it.price?.product?.name || it.description || "Item";
         const qty = it.quantity ?? 1;
         const amount = (it.amount_total ?? 0) / 100;
         return { name, qty, amount };
@@ -71,15 +79,19 @@ export default async function handler(req, res) {
       const total = (full.amount_total || 0) / 100;
       const currency = (full.currency || "usd").toUpperCase();
 
-      // Build a small HTML summary
-      const rows = lines
-        .map(
-          (l) =>
-            `<tr><td>${l.name}</td><td style="text-align:center">${l.qty}</td><td style="text-align:right">$${l.amount.toFixed(
-              2
-            )}</td></tr>`
-        )
-        .join("");
+      const rows = lines.map(
+        (l) =>
+          `<tr><td>${l.name}</td><td style="text-align:center">${l.qty}</td><td style="text-align:right">$${l.amount.toFixed(2)}</td></tr>`
+      ).join("");
+
+      const addr = full.shipping_details?.address;
+      const shipTo = addr
+        ? [
+            addr.line1, addr.line2,
+            [addr.city, addr.state].filter(Boolean).join(", "),
+            addr.postal_code, addr.country
+          ].filter(Boolean).join(" · ")
+        : "N/A";
 
       const html = `
         <div style="font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif">
@@ -89,28 +101,20 @@ export default async function handler(req, res) {
           <table style="width:100%;border-collapse:collapse" border="1" cellpadding="6">
             <thead><tr><th align="left">Item</th><th>Qty</th><th align="right">Amount</th></tr></thead>
             <tbody>${rows}</tbody>
-            <tfoot><tr><td colspan="2" align="right"><b>Total</b></td><td align="right"><b>$${total.toFixed(
-              2
-            )} ${currency}</b></td></tr></tfoot>
+            <tfoot><tr><td colspan="2" align="right"><b>Total</b></td><td align="right"><b>$${total.toFixed(2)} ${currency}</b></td></tr></tfoot>
           </table>
-          <p style="margin-top:12px">Ship to (if collected on Checkout): ${
-            full.shipping_details?.address
-              ? `${full.shipping_details.address.line1 || ""} ${
-                  full.shipping_details.address.city || ""
-                }`
-              : "N/A"
-          }</p>
+          <p style="margin-top:12px"><b>Ship to:</b> ${shipTo}</p>
         </div>
       `;
 
-      // 1) Send to you (internal notification)
+      // 1) Internal notification (FIXED: missing comma here previously)
       await sendEmail({
-        to: ["info@hacheeto.com", "parisd@hacheeto.com"]
+        to: ["info@hacheeto.com", "parisd@hacheeto.com"],
         subject: "✅ Hacheeto Store — Payment received",
         html
       });
 
-      // 2) Optional: confirmation to the buyer (uncomment if desired)
+      // 2) Optional buyer confirmation
       if (buyer) {
         await sendEmail({
           to: buyer,
@@ -123,7 +127,7 @@ export default async function handler(req, res) {
       }
     }
 
-    // Respond to Stripe quickly
+    // Always ack Stripe quickly
     res.json({ received: true });
   } catch (err) {
     console.error("Webhook error:", err.message);
