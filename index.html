@@ -380,32 +380,39 @@
     thumbsWrap.appendChild(node);
   });
 
-  // Videos
-  function playMp4(src){
-    const slot = document.getElementById('videoSlot');
-    slot.innerHTML = '<video controls preload="metadata" class="w-full rounded-2xl" poster="hachito.webp"><source src="'+src+'" type="video/mp4"></video>';
+   // Brand video language buttons (English / Spanish)
+  const HACHEETO_BRAND_VIDEOS = {
+    en: "https://www.youtube.com/embed/7TPlFvWx8ek?rel=0",
+    es: "https://www.youtube.com/embed/v0196EY85_A?rel=0"
+  };
+
+  const brandFrame = document.getElementById("brandVideoFrame");
+  const langButtons = document.querySelectorAll(".langBtn");
+
+  if (brandFrame && langButtons.length) {
+    langButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const lang = btn.getAttribute("data-lang");
+        const url = HACHEETO_BRAND_VIDEOS[lang];
+
+        if (url) {
+          brandFrame.src = url;
+        }
+
+        // simple visual toggle (highlight active)
+        langButtons.forEach((b) => {
+          const isActive = b === btn;
+          if (isActive) {
+            b.classList.remove("bg-amber-100", "text-amber-700", "border", "border-amber-300");
+            b.classList.add("bg-amber-600", "text-white");
+          } else {
+            b.classList.remove("bg-amber-600", "text-white");
+            b.classList.add("bg-amber-100", "text-amber-700", "border", "border-amber-300");
+          }
+        });
+      });
+    });
   }
-  document.getElementById('playSelected').addEventListener('click', () => {
-    const sel = document.getElementById('videoSelect');
-    if (sel && sel.value) playMp4(sel.value);
-  });
-  document.querySelectorAll('.vbtn').forEach(btn => {
-    btn.addEventListener('click', () => playMp4(btn.getAttribute('data-src')));
-  });
-  document.getElementById('ytBtn').addEventListener('click', () => {
-    // Replace with your real YouTube URL if you have one:
-    const yt = 'https://www.youtube.com/@hacheeto-x4m';
-    let id = '';
-    try{
-      if(yt.includes('youtube') || yt.includes('youtu.be')){
-        id = yt.split('v=')[1] ? yt.split('v=')[1].split('&')[0] : '';
-        if(!id && yt.includes('youtu.be/')) id = yt.split('youtu.be/')[1].split(/[?&]/)[0];
-      }
-    }catch(e){}
-    if(!id) id = 'dQw4w9WgXcQ';
-    const slot = document.getElementById('videoSlot');
-    slot.innerHTML = '<iframe class="w-full rounded-2xl" height="360" src="https://www.youtube.com/embed/'+encodeURIComponent(id)+'" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-  });
 
   // Footer year
   document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());
