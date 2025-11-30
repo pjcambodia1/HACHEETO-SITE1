@@ -57,5 +57,26 @@
       el.classList.remove("hidden");
     }
   </script>
+  <script>
+  // Fire a membership success event once per visit
+  (function () {
+    try {
+      // Optional: prevent double-counting if user refreshes
+      var key = 'hacheeto_membership_success_fired';
+      if (sessionStorage.getItem(key)) return;
+      sessionStorage.setItem(key, '1');
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'membership_purchase_success', {
+          currency: 'USD',
+          value: 12.0,              // founding offer
+          membership_type: 'Hacheeto World Club',
+          source_page: 'success.html'
+        });
+      }
+    } catch (e) {}
+  })();
+</script>
+
 </body>
 </html>
