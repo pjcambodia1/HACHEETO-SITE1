@@ -407,6 +407,16 @@
         if (url) {
           brandFrame.src = url;
         }
+  // --- GA4 helper for custom events ---
+  function trackEvent(eventName, params) {
+    try {
+      if (typeof gtag === "function") {
+        gtag('event', eventName, params || {});
+      }
+    } catch (e) {
+      // fail silently if GA isn't ready
+    }
+  }
 
         // simple visual toggle (highlight active)
         langButtons.forEach((b) => {
