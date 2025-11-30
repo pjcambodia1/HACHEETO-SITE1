@@ -487,6 +487,19 @@
       });
     });
   });
+  // 6) Newsletter / updates subscribe form
+  // Try to find a form that posts to Google Forms (or similar)
+  const subscribeForm =
+    document.querySelector('form[action*="forms.gle"], form[action*="google.com/forms"], form#subscribe, form[name="subscribe"]');
+
+  if (subscribeForm) {
+    subscribeForm.addEventListener('submit', () => {
+      trackEvent('newsletter_signup', {
+        section: 'subscribe',
+        form_action: subscribeForm.getAttribute('action') || 'unknown'
+      });
+    });
+  }
 
   // Footer year
   document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());
