@@ -432,6 +432,61 @@
       });
     });
   }
+  // --- Advanced tracking for key actions ---
+
+  // 1) Shop Hacheeto button in hero
+  const shopBtn = document.querySelector('a[href="/products.html"]');
+  if (shopBtn) {
+    shopBtn.addEventListener('click', () => {
+      trackEvent('click_shop_hacheeto', {
+        section: 'hero',
+        link_url: '/products.html'
+      });
+    });
+  }
+
+  // 2) Membership Stripe buy button
+  const membershipBtn = document.querySelector('stripe-buy-button[buy-button-id="buy_btn_1SIERGDHOKkzOa2pim4naIlq"]');
+  if (membershipBtn) {
+    membershipBtn.addEventListener('click', () => {
+      trackEvent('click_join_membership', {
+        section: 'membership',
+        product: 'Hacheeto World Club',
+        pricing: '12_founding_offer_or_2_50_month'
+      });
+    });
+  }
+
+  // 3) PDF download (Hacheeto Big Adventure)
+  document.querySelectorAll('a[href$="Hacheeto_Big_Adventure_PrintReady.pdf"]').forEach((link) => {
+    link.addEventListener('click', () => {
+      trackEvent('download_big_adventure_pdf', {
+        section: link.closest('section') ? link.closest('section').id || 'unknown' : 'unknown'
+      });
+    });
+  });
+
+  // 4) Materials & Ordering page link
+  const materialsLink = document.querySelector('a[href="/materials.html"]');
+  if (materialsLink) {
+    materialsLink.addEventListener('click', () => {
+      trackEvent('click_materials_page', {
+        section: 'post_membership',
+        link_url: '/materials.html'
+      });
+    });
+  }
+
+  // 5) Brand video language changes (English / Spanish buttons)
+  document.querySelectorAll('.langBtn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const lang = btn.getAttribute('data-lang') || 'unknown';
+      trackEvent('video_language_change', {
+        language: lang,
+        video_title: 'Hacheeto Learns Patience'
+      });
+    });
+  });
 
   // Footer year
   document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());
