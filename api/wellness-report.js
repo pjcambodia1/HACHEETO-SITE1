@@ -72,8 +72,33 @@ Return JSON only with: headline, summary, bpNote, bodyNote, suggestions, confide
       return res.status(500).json({ error: err });
     }
 
-    const data = await response.json();
-    return res.status(200).json(JSON.parse(data.output_text));
+ return res.status(200).json({
+  ...JSON.parse(data.output_text),
+
+  meta: {
+    generatedAt: new Date().toISOString(),
+    location: payload.locationName || null,
+    elevationM: payload.actualElevationM || null,
+    densityAltitudeM: payload.densityAltitudeM || null,
+    daBurdenM: payload.daBurdenM || null,
+    shift24hM: payload.shift24hM || null,
+    shift30mM: payload.shift30mM || null
+  },
+
+  userContext: {
+    bpProfile: payload.bpProfile || null,
+    pulse: payload.pulseBpm || null,
+    sensitivity: payload.sensitivity || null,
+    ageGroup: payload.ageGroup || null,
+    adaptiveScore: payload.adaptiveScore || null
+  },
+
+  diagnostics: {
+    version: "v1.0",
+    source: "AirAware-Vercel",
+    confidenceLevel: "computed+ai"
+  }
+});
 
   } catch (err) {
     return res.status(500).json({ error: "Wellness report failed." });
