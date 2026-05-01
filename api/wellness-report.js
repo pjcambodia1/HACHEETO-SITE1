@@ -72,33 +72,35 @@ Return JSON only with: headline, summary, bpNote, bodyNote, suggestions, confide
       return res.status(500).json({ error: err });
     }
 
- return res.status(200).json({
-  ...JSON.parse(data.output_text),
+    const data = await response.json();
 
-  meta: {
-    generatedAt: new Date().toISOString(),
-    location: payload.locationName || null,
-    elevationM: payload.actualElevationM || null,
-    densityAltitudeM: payload.densityAltitudeM || null,
-    daBurdenM: payload.daBurdenM || null,
-    shift24hM: payload.shift24hM || null,
-    shift30mM: payload.shift30mM || null
-  },
+    return res.status(200).json({
+      ...JSON.parse(data.output_text),
 
-  userContext: {
-    bpProfile: payload.bpProfile || null,
-    pulse: payload.pulseBpm || null,
-    sensitivity: payload.sensitivity || null,
-    ageGroup: payload.ageGroup || null,
-    adaptiveScore: payload.adaptiveScore || null
-  },
+      meta: {
+        generatedAt: new Date().toISOString(),
+        location: payload.locationName ?? null,
+        elevationM: payload.actualElevationM ?? null,
+        densityAltitudeM: payload.densityAltitudeM ?? null,
+        daBurdenM: payload.daBurdenM ?? null,
+        shift24hM: payload.shift24hM ?? null,
+        shift30mM: payload.shift30mM ?? null
+      },
 
-  diagnostics: {
-    version: "v1.0",
-    source: "AirAware-Vercel",
-    confidenceLevel: "computed+ai"
-  }
-});
+      userContext: {
+        bpProfile: payload.bpProfile ?? "unknown",
+        pulseBpm: payload.pulseBpm ?? null,
+        sensitivity: payload.sensitivity ?? null,
+        ageGroup: payload.ageGroup ?? "unknown",
+        adaptiveScore: payload.adaptiveScore ?? 0
+      },
+
+      diagnostics: {
+        version: "1.0",
+        source: "airaware-vercel",
+        model: "gpt-5.4-mini"
+      }
+    });
 
   } catch (err) {
     return res.status(500).json({ error: "Wellness report failed." });
